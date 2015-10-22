@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Public Key Cryptography Learning Resource Unit Tests - Shows tests failing/passing</title>
+    <style type="text/css">html,body{font-family:Arial,sans-serif;margin:0;padding:0;}body{padding:10px 40px;}h1{margin-bottom:0;}h2{margin-top:0;color:#999;}table{width:100%;margin-top:20px;margin-bottom:20px;table-layout:fixed;}tr.header{background:#ddd;font-weight:bold;border-bottom:none;}td{padding:7px;border-top:none;border-left:1px black solid;border-bottom:1px black solid;border-right:none;word-break:break-all;word-wrap:break-word;}tr.pass td{color:#003b07;background:#86e191;}tr.skip td{color:#7d3a00;background:#ffd24a;}tr.fail td{color:#5e0e00;background:#ff9c8a;}tr:first-child td{border-top:1px black solid;}td:last-child{border-right:1px black solid;}tr.overview{font-weight:bold;color:#777;}tr.overview td{padding-bottom:0px;border-bottom:none;}tr.system-out td{color:#777;}hr{height:2px;margin:30px 0;background:#000;border:none;}</style>
+  </head>
+  <body>
+    <h1>Public Key Cryptography Learning Resource Unit Tests</h1>
+    <h2>Shows tests failing/passing</h2>
+    <table cellspacing="0" cellpadding="0" border="0">
+      <tr class="overview">
+        <td colspan="3" title="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.71 Safari/537.36">Browser: Chrome 46.0.2490 (Windows 10 0.0.0)</td>
+      </tr>
+      <tr class="overview">
+        <td colspan="3">Timestamp: 10/22/2015, 12:48:22 PM</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          16 tests / 
+          0 errors / 
+          11 failures / 
+          0 skipped / 
+          runtime: 0.945s
+        </td>
+      </tr>
+      <tr class="header">
+        <td>Status</td>
+        <td>Spec</td>
+        <td>Suite / Results</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.006s</td>
+        <td>correctly divides positive numbers</td>
+        <td>MathFactory &raquo; IntDivide</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.003s</td>
+        <td>correctly divides negative numbers</td>
+        <td>MathFactory &raquo; IntDivide</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>throws exception on division by 0</td>
+        <td>MathFactory &raquo; IntDivide</td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>correctly identifies greatest common factors</td>
+        <td>
+          MathFactory &raquo; GreatestCommonFactor
+          <br />TypeError: MathFactory.GreatestCommonFactor is not a function
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/MathSpec.js:44:23)
+
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.002s</td>
+        <td>generates a Public Key</td>
+        <td>EncryptionFactory &raquo; GenerateKeys(false)</td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>generates a Private Key</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(false)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:17:31)
+
+        </td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>generates a Public Key</td>
+        <td>EncryptionFactory &raquo; GenerateKeys(true)</td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>generates a Private Key</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:29:31)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns a P prime</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:34:27)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns a Q prime</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:39:27)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns a N value</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:44:27)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns a Bit Length</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:49:30)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns an E value (Euler Value)</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:54:27)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns a D value (Modular Multiplicative Inverse)</td>
+        <td>
+          EncryptionFactory &raquo; GenerateKeys(true)
+          <br />Expected undefined to be defined.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:59:27)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns encrypted data</td>
+        <td>
+          EncryptionFactory &raquo; EncryptData
+          <br />Expected undefined to equal 'EncryptedData'.
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:67:22)
+
+        </td>
+      </tr>
+      <tr class="fail">
+        <td>Failed</td>
+        <td>returns decrypted data</td>
+        <td>
+          EncryptionFactory &raquo; DecryptData
+          <br />ReferenceError: Encrypted is not defined
+    at Object.&lt;anonymous&gt; (D:/Subversion/branches/AngularJS RSA/test/RSA/RSASpec.js:75:11)
+
+        </td>
+      </tr>
+    </table>
+    <hr/>
+  </body>
+</html>
