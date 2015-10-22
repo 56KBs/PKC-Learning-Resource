@@ -41,7 +41,10 @@ describe("MathFactory", function() {
 
 	describe("GreatestCommonFactor", function() {
 		it ("correctly identifies greatest common factors", function() {
-			expect(MathFactory.GreatestCommonFactor(10, 2)).toEqual(1);
+			expect(MathFactory.GreatestCommonFactor(10, 2)).toEqual(2);
+			expect(MathFactory.GreatestCommonFactor(24, 108)).toEqual(12);
+			expect(MathFactory.GreatestCommonFactor(9, 12)).toEqual(3);
+			expect(MathFactory.GreatestCommonFactor(100, 17)).toEqual(1);
 		});
-	})
+	});
 });
