@@ -41,3 +41,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# =========================
+# Additional Ignores
+# =========================
+node_modules
+coverage
+karma_html

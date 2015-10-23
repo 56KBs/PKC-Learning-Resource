@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'js/angular.min.js',
+      'thirdparty//angular.min.js',
       'node_modules/angular-mocks/angular-mocks.js',
       'js/myApp.js',
       'js/*.js',
@@ -31,13 +31,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        'js/*.js': ['coverage'] 
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'html'],
+    reporters: ['progress', 'html', 'coverage'],
 
 
     // web server port
@@ -64,13 +65,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
-
-    htmlReporter: {
-        outputFile: 'test/units.html',
-
-        pageTitle: 'Public Key Cryptography Learning Resource Unit Tests',
-        subPageTitle: 'Shows tests failing/passing'
-    }
+    singleRun: false
   })
 }

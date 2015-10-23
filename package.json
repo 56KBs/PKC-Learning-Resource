@@ -1,0 +1,36 @@
+{
+  "name": "pkc-learning-resource",
+  "version": "1.0.0",
+  "description": "Matthew Palmers final year project",
+  "main": "my.conf.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    
+  },
+  "devDependencies": {
+    "karma": "^0.13.14",
+    "jasmine-core": "^2.3.4",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-coverage": "^0.5.3",
+    "karma-html-reporter": "^0.2.7",
+    "karma-jasmine": "^0.3.6",
+    "angular": "^1.4.7",
+    "angular-mocks": "^1.4.7",
+    "node-gyp": "^3.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/56KBs/PKC-Learning-Resource.git"
+  },
+  "author": "Matthew Palmer <matt@infusioncomputing.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/56KBs/PKC-Learning-Resource/issues"
+  },
+  "homepage": "https://github.com/56KBs/PKC-Learning-Resource#readme"
+}
