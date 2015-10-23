@@ -60,10 +60,65 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 		}
 	}
 
+	MathFactory.ModularMultiplicativeInverse = function(a, b)
+	{
+		var t = 0;
+		var newT = 1;
+		var r = b;
+		var newR = a;
+
+		if (a < 0 || b < 0)
+		{
+			throw "Inputs cannot be negative";
+		}
+
+		while (newR != 0)
+		{
+			var quotient = MathFactory.IntDivide(r, newR);
+
+			var temp = newT;
+			newT = t - quotient * temp;
+			t = temp;
+
+			temp = newR;
+			newR = r - quotient * temp;
+			r = temp;
+		}
+
+		if (r > 1)
+		{
+			throw "Inputs are not coprime";
+		}
+
+		if (t < 0)
+		{
+			t = t + b;
+		}
+		
+		return t;
+	}
+
 	MathFactory.EulerTotientRSA = function(n, p, q)
 	{
 		// This is a simplified version, specific to RSA usage
 		return (n - (p + q - 1));
+	}
+
+	MathFactory.GenerateCoprime = function(a)
+	{
+		var random = MathFactory.GenerateRandom(1, a - 1);
+		
+		while (!MathFactory.IsCoprime(a, random))
+		{
+			random = MathFactory.GenerateRandom(1, a - 1);
+		}
+
+		return random;
+	}
+
+	MathFactory.GenerateRandom = function(min, max)
+	{
+		return Math.floor(Math.random() * (max + 1)) + min;
 	}
 
 	MathFactory.IsEven = function(number)
@@ -74,6 +129,16 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 	MathFactory.IsOdd = function(number)
 	{
 		return !MathFactory.IsEven(number);
+	}
+
+	MathFactory.IsCoprime = function(a, b)
+	{
+		return MathFactory.GreatestCommonFactor(a, b) == 1 ? true : false;
+	}
+
+	MathFactory.BitLength = function(a)
+	{
+		return a.toString(2).length;
 	}
 
 	return MathFactory;
