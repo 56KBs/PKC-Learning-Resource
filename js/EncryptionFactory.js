@@ -1,6 +1,6 @@
-angular.module('websiteApp.EncryptionFactory', ['websiteApp.MathFactory']);
+angular.module('websiteApp.EncryptionFactory', ['websiteApp.MathFactory', 'websiteApp.EncoderFactory']);
 
-angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', function(MathFactory)
+angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', function(MathFactory, EncoderFactory)
 {
 	var EncryptionFactory = {};
 

@@ -94,7 +94,7 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 		{
 			t = t + b;
 		}
-		
+
 		return t;
 	}
 
@@ -116,9 +116,94 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 		return random;
 	}
 
+	MathFactory.GeneratePrime = function(bitLength)
+	{
+		debugger;
+		var prime = MathFactory.GenerateRandom((Math.pow(2, bitLength-1)), (Math.pow(2, bitLength)-1));
+
+		while (!MathFactory.IsPrime(prime))
+		{
+			prime = MathFactory.GenerateRandom((Math.pow(2, bitLength-1)), (Math.pow(2, bitLength)-1));
+		}
+
+		return prime;
+	}
+
+	MathFactory.IsPrime = function(prime, accuracy)
+	{
+		debugger;
+		var k = null;
+
+		if (accuracy === undefined)
+		{
+			k = 40;
+		}
+		else
+		{
+			k = accuracy;
+		}
+
+		if (MathFactory.IsEven(prime))
+		{
+			return false;
+		}
+
+		// Validate primes with a Miller-Rabin primality test
+
+		var r = null;
+		var d = prime - 1;
+		
+		while (d % 2 === 0)
+		{
+			d /= 2;
+			++r;
+		}
+
+		//var r = Math.floor(MathFactory.BaseLog(2, (prime - 1)));
+		//var d = prime - Math.pow(2, r) - 1;
+
+		for (var i = 0; i < k; i++)
+		{
+			var a = MathFactory.GenerateRandom(2, (prime - 2));
+			var x = MathFactory.PowMod(a, d, prime);
+
+			if (x == 1 || x == (prime - 1))
+			{
+				continue;
+			}
+
+			var broken = false;
+			for (var j = 0; j < (r - 1); j++)
+			{
+				x = MathFactory.PowMod(x, 2, prime);
+
+				if (x == 1)
+				{
+					return false;
+				}
+				else if (x == (prime - 1))
+				{
+					broken = true;
+					break;
+				}
+			}
+
+			if (broken)
+			{
+				break;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	MathFactory.GenerateRandom = function(min, max)
 	{
-		return Math.floor(Math.random() * (max + 1)) + min;
+		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
 	MathFactory.IsEven = function(number)
@@ -139,6 +224,25 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 	MathFactory.BitLength = function(a)
 	{
 		return a.toString(2).length;
+	}
+
+	MathFactory.BaseLog = function(a, b)
+	{
+		return Math.log(b) / Math.log(a);
+	}
+
+	MathFactory.PowMod = function(a, b, c)
+	{
+		debugger;
+		var result = a;
+
+		for (var i = 0; i < (b - 1); i++)
+		{
+			var multiply = result * a;
+			result = multiply % c;
+		}
+
+		return result;
 	}
 
 	return MathFactory;

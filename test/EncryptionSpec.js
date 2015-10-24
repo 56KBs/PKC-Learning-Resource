@@ -90,5 +90,5 @@ describe("EncryptionFactory", function() {
 			var Decrypted = EncryptionFactory.DecryptData("ENCRYPTEDDATA", RSAKeys.publicKey);
 			expect(Encrypted).toEqual("This is a test");
 		})
-	})
+	});
 });

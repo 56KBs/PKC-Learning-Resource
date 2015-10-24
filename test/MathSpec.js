@@ -79,12 +79,12 @@ describe("MathFactory", function() {
 
 	describe("BitLength", function() {
 		it("correctly identifies the bit length", function() {
-			expect(MathFactory.BitLength(2)).toBe(2);
-			expect(MathFactory.BitLength(1)).toBe(1);
-			expect(MathFactory.BitLength(0)).toBe(1);
-			expect(MathFactory.BitLength(50)).toBe(6);
-			expect(MathFactory.BitLength(2389)).toBe(12);
-			expect(MathFactory.BitLength(9876986759764754584856347347)).toBe(93);
+			expect(MathFactory.BitLength(2)).toEqual(2);
+			expect(MathFactory.BitLength(1)).toEqual(1);
+			expect(MathFactory.BitLength(0)).toEqual(1);
+			expect(MathFactory.BitLength(50)).toEqual(6);
+			expect(MathFactory.BitLength(2389)).toEqual(12);
+			expect(MathFactory.BitLength(9876986759764754584856347347)).toEqual(93);
 		});
 	});
 
@@ -114,9 +114,17 @@ describe("MathFactory", function() {
 
 	describe("GenerateRandom", function() {
 		it("correctly generates a number within the limits", function() {
-			var random = MathFactory.GenerateRandom(1, 900)
-			expect(random).toBeGreaterThan(1);
-			expect(random).toBeLessThan(900);
+			var random = MathFactory.GenerateRandom(1, 900);
+			expect(random).toBeGreaterThan(0);
+			expect(random).toBeLessThan(901);
+
+			var random = MathFactory.GenerateRandom(1, 10);
+			expect(random).toBeGreaterThan(0);
+			expect(random).toBeLessThan(11);
+
+			var random = MathFactory.GenerateRandom(700, 900);
+			expect(random).toBeGreaterThan(701);
+			expect(random).toBeLessThan(901);
 		});
 	});
 
@@ -136,6 +144,47 @@ describe("MathFactory", function() {
 			expect(function() { MathFactory.ModularMultiplicativeInverse(-7, 26); }).toThrow("Inputs cannot be negative");
 			expect(function() { MathFactory.ModularMultiplicativeInverse(7, -26); }).toThrow("Inputs cannot be negative");
 			expect(function() { MathFactory.ModularMultiplicativeInverse(-7, -26); }).toThrow("Inputs cannot be negative");
+		});
+	});
+
+	/*describe("GeneratePrime", function() {
+		it("correctly outputs a value of the specified bit length", function() {
+			expect(MathFactory.BitLength(MathFactory.GeneratePrime(30))).toEqual(30);
+		});
+	});*/
+
+	/*describe("IsPrime", function() {
+		it("correctly identifies prime numbers", function() {
+			expect(MathFactory.IsPrime(101)).toBe(true);
+			expect(MathFactory.IsPrime(827)).toBe(true);
+			expect(MathFactory.IsPrime(1693)).toBe(true);
+			expect(MathFactory.IsPrime(3461)).toBe(true);
+			expect(MathFactory.IsPrime(5869)).toBe(true);
+			expect(MathFactory.IsPrime(9587)).toBe(true);
+			expect(MathFactory.IsPrime(605727251)).toBe(true);
+		});
+
+		it("correctly identifies non-prime numbers", function() {
+			expect(MathFactory.IsPrime(1692)).toBe(false);
+			expect(MathFactory.IsPrime(9225)).toBe(false);
+			expect(MathFactory.IsPrime(7743)).toBe(false);
+			expect(MathFactory.IsPrime(341)).toBe(false);
+		});
+	});*/
+
+	describe("BaseLog", function() {
+		it("correctly calculates the log", function() {
+			expect(MathFactory.BaseLog(2, 128)).toEqual(7);
+			expect(MathFactory.BaseLog(8, 64)).toEqual(2);
+			expect(MathFactory.BaseLog(8, 512)).toEqual(3);
+		});
+	});
+
+	describe("PowMod", function() {
+		it("correctly calculates the result", function() {
+			expect(MathFactory.PowMod(2, 2, 4)).toEqual(0);
+			expect(MathFactory.PowMod(9, 25, 101)).toEqual(100);
+			expect(MathFactory.PowMod(91513143, 302863625, 605727251)).toEqual(605727250);
 		});
 	});
 });
