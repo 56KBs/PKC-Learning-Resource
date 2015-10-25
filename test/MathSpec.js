@@ -180,11 +180,11 @@ describe("MathFactory", function() {
 		});
 	});
 
-	describe("PowMod", function() {
+	/*describe("PowMod", function() {
 		it("correctly calculates the result", function() {
 			expect(MathFactory.PowMod(2, 2, 4)).toEqual(0);
 			expect(MathFactory.PowMod(9, 25, 101)).toEqual(100);
 			expect(MathFactory.PowMod(91513143, 302863625, 605727251)).toEqual(605727250);
 		});
-	});
+	});*/
 });
