@@ -7,88 +7,122 @@ describe("EncryptionFactory", function() {
 	}));
 
 	describe("GenerateKeys(false)", function() {
+		beforeEach(function() {
+			originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+      		jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+		});
+
 		it("generates a Public Key", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(false);
+			var RSAKeys = EncryptionFactory.GenerateKeys(false, 32);
 			expect(RSAKeys.publicKey).toBeDefined();
 			expect(RSAKeys.publicKey).not.toBeNull();
 		});
 		
 		it("generates a Private Key", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(false);
+			var RSAKeys = EncryptionFactory.GenerateKeys(false, 32);
 			expect(RSAKeys.privateKey).toBeDefined();
 			expect(RSAKeys.privateKey).not.toBeNull();
+		});
+
+		afterEach(function() {
+      		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 		});
 	});	
 
 	describe("GenerateKeys(true)", function() {
+		beforeEach(function() {
+			originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+      		jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+		});
+
 		it("generates a Public Key", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.publicKey).toBeDefined();
 			expect(RSAKeys.publicKey).not.toBeNull();
 		});
 		
 		it("generates a Private Key", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.privateKey).toBeDefined();
 			expect(RSAKeys.privateKey).not.toBeNull();
 		});
 
 		it("returns a P prime", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.primeP).toBeDefined();
 			expect(RSAKeys.primeP).not.toBeNull();
 		});
 
 		it("returns a Q prime", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.primeQ).toBeDefined();
 			expect(RSAKeys.primeQ).not.toBeNull();
 		});
 
 		it("returns a N value", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.valueN).toBeDefined();
 			expect(RSAKeys.valueN).not.toBeNull();
 		});
 
 		it("returns a Bit Length", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.bitLength).toBeDefined();
 			expect(RSAKeys.bitLength).not.toBeNull();
 		});
 
 		it("returns an Euler Value", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.eulerValue).toBeDefined();
 			expect(RSAKeys.eulerValue).not.toBeNull();
 		});
 
 		it("returns an E value (Co-prime to Euler Value)", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.valueE).toBeDefined();
 			expect(RSAKeys.valueE).not.toBeNull();
 		});
 
 		it("returns a D value (Modular Multiplicative Inverse)", function() {
-			var RSAKeys = EncryptionFactory.GenerateKeys(true);
+			var RSAKeys = EncryptionFactory.GenerateKeys(true, 32);
 			expect(RSAKeys.valueD).toBeDefined();
 			expect(RSAKeys.valueD).not.toBeNull();
+		});
+
+		afterEach(function() {
+      		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 		});
 	});
 
 	describe("EncryptData", function() {
 		it("returns encrypted data", function() {
-			var RSAKeys = { 'publicKey': "predefinedKey", 'privateKey': "predefinedKey" };
-			var Encrypted = EncryptionFactory.EncryptData("This is a test", RSAKeys.privateKey);
-			expect(Encrypted).toEqual("EncryptedData");
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "20599243",
+					'modulus': "119117501"},
+				'publicKey': {
+					'exponent':"64876771",
+					'modulus': "119117501"}
+			};
+
+			var Encrypted = EncryptionFactory.EncryptData("123456", RSAKeys.publicKey);
+			expect(Encrypted).toEqual("36495657");
 		})
 	});
 
 	describe("DecryptData", function() {
 		it("returns decrypted data", function() {
-			var RSAKeys = { 'publicKey': "predefinedKey", 'privateKey': "predefinedKey" };
-			var Decrypted = EncryptionFactory.DecryptData("ENCRYPTEDDATA", RSAKeys.publicKey);
-			expect(Encrypted).toEqual("This is a test");
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "20599243",
+					'modulus': "119117501"},
+				'publicKey': {
+					'exponent':"64876771",
+					'modulus': "119117501"}
+			};
+
+			var Decrypted = EncryptionFactory.DecryptData("36495657", RSAKeys.privateKey);
+			expect(Decrypted).toEqual("123456");
 		})
 	});
 });

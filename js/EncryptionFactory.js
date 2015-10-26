@@ -4,8 +4,13 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 {
 	var EncryptionFactory = {};
 
-	EncryptionFactory.GenerateKeys = function(returnAllValues)
+	EncryptionFactory.GenerateKeys = function(returnAllValues, bitLength)
 	{
+		if (bitLength === undefined)
+		{
+			bitLength = 32;
+		}
+
 		// Generates the public and private keys
 		var values = { 'primeP': null,
 					   'primeQ': null,
@@ -17,19 +22,21 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 					   'publicKey': null,
 					   'privateKey': null };
 
+	   values['primeP'] = MathFactory.GeneratePrimeFromBits(bitLength).toString();
+	   values['primeQ'] = MathFactory.GeneratePrimeFromBits(bitLength).toString();
 
-	   var listOfPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271];
-	   values['primeP'] = listOfPrimes[Math.floor(Math.random()*listOfPrimes.length)];
-	   values['primeQ'] = listOfPrimes[Math.floor(Math.random()*listOfPrimes.length)];
-
-	   values['valueN'] = values['primeP'] * values['primeQ'];
+	   values['valueN'] = bigInt(values['primeP']).multiply(values['primeQ']).toString();
 	   values['bitLength'] = MathFactory.BitLength(values['valueN']);
 
-	   values['eulerValue'] = MathFactory.EulerTotientRSA(values['valueN'], values['primeP'], values['primeQ']);
+	   values['eulerValue'] = MathFactory.EulerTotientRSA(values['valueN'], values['primeP'], values['primeQ']).toString();
 
-	   values['valueE'] = MathFactory.GenerateCoprime(values['eulerValue']);
+	   values['valueE'] = MathFactory.GenerateCoprime(values['eulerValue']).toString();
 
-	   values['valueD'] = MathFactory.ModularMultiplicativeInverse(values['valueE'], values['eulerValue']);
+	   values['valueD'] = MathFactory.ModularMultiplicativeInverse(values['valueE'], values['eulerValue']).toString();
+
+	   values['publicKey'] = {'modulus': values['valueN'], 'exponent': values['valueE']};
+
+	   values['privateKey'] = {'modulus': values['valueN'], 'exponent': values['valueD']};
 
 		if (returnAllValues)
 		{
@@ -44,11 +51,13 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 	EncryptionFactory.EncryptData = function(dataToEncrypt, encryptionKey)
 	{
 		// Encrypts Data
+		return bigInt(dataToEncrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
 	}
 
 	EncryptionFactory.DecryptData = function(dataToDecrypt, encryptionKey)
 	{
 		// Decrypts Data
+		return bigInt(dataToDecrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
 	}
 
 	return EncryptionFactory;

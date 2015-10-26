@@ -6,6 +6,41 @@ describe("MathFactory", function() {
 		MathFactory = _MathFactory_;
 	}));
 
+	// Custom matcher to make .toIntEqual() use Integer.Equals()
+	var customEquality = {
+		toBigIntEqual: function()
+		{
+			return {
+				compare: function(actual, expected)
+				{
+					if (expected === undefined)
+					{
+						expected = '';
+					}
+
+					var result = {};
+
+					result.pass = actual.equals(expected);
+
+					if (result.pass)
+					{
+						result.message = "Expected " + actual + " to be " + expected;
+					}
+					else
+					{
+						result.message = "Expected " + actual + " to be " + expected;
+					}
+
+					return result;
+				}				
+			}
+		}
+	};
+
+	beforeEach(function() {
+		jasmine.addMatchers(customEquality);
+	});
+
 	describe("IntDivide", function() {
 		it("correctly divides positive numbers", function() {
 			expect(MathFactory.IntDivide(9, 3)).toEqual(3);
@@ -90,18 +125,18 @@ describe("MathFactory", function() {
 
 	describe("GreatestCommonFactor", function() {
 		it("correctly identifies greatest common factors", function() {
-			expect(MathFactory.GreatestCommonFactor(10, 2)).toEqual(2);
-			expect(MathFactory.GreatestCommonFactor(24, 108)).toEqual(12);
-			expect(MathFactory.GreatestCommonFactor(9, 12)).toEqual(3);
-			expect(MathFactory.GreatestCommonFactor(100, 17)).toEqual(1);
-			expect(MathFactory.GreatestCommonFactor(0, 100)).toEqual(100);
-			expect(MathFactory.GreatestCommonFactor(100, 0)).toEqual(100);
+			expect(MathFactory.GreatestCommonFactor(10, 2)).toBigIntEqual(2);
+			expect(MathFactory.GreatestCommonFactor(24, 108)).toBigIntEqual(12);
+			expect(MathFactory.GreatestCommonFactor(9, 12)).toBigIntEqual(3);
+			expect(MathFactory.GreatestCommonFactor(100, 17)).toBigIntEqual(1);
+			expect(MathFactory.GreatestCommonFactor(0, 100)).toBigIntEqual(100);
+			expect(MathFactory.GreatestCommonFactor(100, 0)).toBigIntEqual(100);
 		});
 	});
 
 	describe("EulerTotientRSA", function() {
 		it("correctly calculates the Euler Totient for RSA primes", function() {
-			expect(MathFactory.EulerTotientRSA(91, 7, 13)).toEqual(72);
+			expect(MathFactory.EulerTotientRSA(91, 7, 13)).toBigIntEqual(72);
 		});
 	});
 
@@ -125,15 +160,19 @@ describe("MathFactory", function() {
 			var random = MathFactory.GenerateRandom(700, 900);
 			expect(random).toBeGreaterThan(701);
 			expect(random).toBeLessThan(901);
+
+			var random = MathFactory.GenerateRandom(700, 900);
+			expect(random).toBeGreaterThan(701);
+			expect(random).toBeLessThan(901);
 		});
 	});
 
 	describe("ModularMultiplicativeInverse", function() {
 		it("correctly calculates the modular multiplicative inverse", function() {
-			expect(MathFactory.ModularMultiplicativeInverse(7, 26)).toBe(15);
-			expect(MathFactory.ModularMultiplicativeInverse(37, 216)).toBe(181);
-			expect(MathFactory.ModularMultiplicativeInverse(17, 3120)).toBe(2753);
-			expect(MathFactory.ModularMultiplicativeInverse(1, 1)).toBe(1);
+			expect(MathFactory.ModularMultiplicativeInverse(7, 26)).toBigIntEqual(15);
+			expect(MathFactory.ModularMultiplicativeInverse(37, 216)).toBigIntEqual(181);
+			expect(MathFactory.ModularMultiplicativeInverse(17, 3120)).toBigIntEqual(2753);
+			expect(MathFactory.ModularMultiplicativeInverse(1, 1)).toBigIntEqual(1);
 		});
 
 		it("correctly throws exception on non-coprimes", function() {
@@ -179,12 +218,4 @@ describe("MathFactory", function() {
 			expect(MathFactory.BaseLog(8, 512)).toEqual(3);
 		});
 	});
-
-	/*describe("PowMod", function() {
-		it("correctly calculates the result", function() {
-			expect(MathFactory.PowMod(2, 2, 4)).toEqual(0);
-			expect(MathFactory.PowMod(9, 25, 101)).toEqual(100);
-			expect(MathFactory.PowMod(91513143, 302863625, 605727251)).toEqual(605727250);
-		});
-	});*/
 });

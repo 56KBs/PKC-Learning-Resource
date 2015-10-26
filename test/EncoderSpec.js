@@ -1,4 +1,4 @@
-describe("EncoderFactory", function() {
+xdescribe("EncoderFactory", function() {
 	var EncoderFactory;
 
 	beforeEach(module('websiteApp.EncoderFactory'));

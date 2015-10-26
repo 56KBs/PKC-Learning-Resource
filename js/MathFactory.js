@@ -16,56 +16,15 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 	MathFactory.GreatestCommonFactor = function(a, b)
 	{
-		if (a == b)
-		{
-			return a;
-		}
-		else if (a == 0)
-		{
-			return b;
-		}
-		else if (b == 0)
-		{
-			return a;
-		}
-
-		if (MathFactory.IsEven(a))
-		{
-			if (MathFactory.IsEven(b))
-			{
-				return MathFactory.GreatestCommonFactor(MathFactory.IntDivide(a, 2), MathFactory.IntDivide(b, 2)) * 2;
-			}
-			else
-			{
-				return MathFactory.GreatestCommonFactor(MathFactory.IntDivide(a, 2), b);
-			}
-		}
-		else
-		{
-			if (MathFactory.IsEven(b))
-			{
-				return MathFactory.GreatestCommonFactor(a, MathFactory.IntDivide(b, 2));
-			}
-			else
-			{
-				if (a >= b)
-				{
-					return MathFactory.GreatestCommonFactor(MathFactory.IntDivide((a-b), 2), b);
-				}
-				else
-				{
-					return MathFactory.GreatestCommonFactor(a, MathFactory.IntDivide((b-a), 2));
-				}
-			}
-		}
+		return bigInt.gcd(a, b);
 	}
 
 	MathFactory.ModularMultiplicativeInverse = function(a, b)
 	{
-		var t = 0;
-		var newT = 1;
-		var r = b;
-		var newR = a;
+		var t = bigInt(0);
+		var newT = bigInt(1);
+		var r = bigInt(b);
+		var newR = bigInt(a);
 
 		if (a < 0 || b < 0)
 		{
@@ -74,14 +33,14 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 		while (newR != 0)
 		{
-			var quotient = MathFactory.IntDivide(r, newR);
+			var quotient = r.divide(newR);
 
 			var temp = newT;
-			newT = t - quotient * temp;
+			newT = t.subtract(quotient.multiply(temp));
 			t = temp;
 
 			temp = newR;
-			newR = r - quotient * temp;
+			newR = r.subtract(quotient.multiply(temp));
 			r = temp;
 		}
 
@@ -92,7 +51,7 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 		if (t < 0)
 		{
-			t = t + b;
+			t = t.add(b);
 		}
 
 		return t;
@@ -101,109 +60,48 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 	MathFactory.EulerTotientRSA = function(n, p, q)
 	{
 		// This is a simplified version, specific to RSA usage
-		return (n - (p + q - 1));
+		var n = bigInt(n);
+		var p = bigInt(p);
+		var q = bigInt(q);
+
+		return n.subtract(p.plus(q.subtract(1)));
 	}
 
 	MathFactory.GenerateCoprime = function(a)
 	{
-		var random = MathFactory.GenerateRandom(1, a - 1);
+		var random = bigInt.randBetween(1, bigInt(a).subtract(1));
 		
-		while (!MathFactory.IsCoprime(a, random))
+		while (!MathFactory.IsCoprime(a, random.toString()))
 		{
-			random = MathFactory.GenerateRandom(1, a - 1);
+			random = bigInt.randBetween(1, bigInt(a).subtract(1));
 		}
 
 		return random;
 	}
 
-	MathFactory.GeneratePrime = function(bitLength)
+	MathFactory.GeneratePrimeFromBits = function(bitLength)
 	{
-		debugger;
-		var prime = MathFactory.GenerateRandom((Math.pow(2, bitLength-1)), (Math.pow(2, bitLength)-1));
+		var randomPrime = MathFactory.GenerateRandomFromBits(bitLength);
 
-		while (!MathFactory.IsPrime(prime))
+		while (!randomPrime.isPrime())
 		{
-			prime = MathFactory.GenerateRandom((Math.pow(2, bitLength-1)), (Math.pow(2, bitLength)-1));
+			randomPrime = MathFactory.GenerateRandomFromBits(bitLength);
 		}
 
-		return prime;
+		return randomPrime.toString();
 	}
 
-	MathFactory.IsPrime = function(prime, accuracy)
+	MathFactory.GenerateRandomFromBits = function(bitLength)
 	{
-		debugger;
-		var k = null;
+		var numbers = MathFactory.BitsToNumbers(bitLength);
 
-		if (accuracy === undefined)
-		{
-			k = 40;
-		}
-		else
-		{
-			k = accuracy;
-		}
-
-		if (MathFactory.IsEven(prime))
-		{
-			return false;
-		}
-
-		// Validate primes with a Miller-Rabin primality test
-
-		var r = null;
-		var d = prime - 1;
-		
-		while (d % 2 === 0)
-		{
-			d /= 2;
-			++r;
-		}
-
-		//var r = Math.floor(MathFactory.BaseLog(2, (prime - 1)));
-		//var d = prime - Math.pow(2, r) - 1;
-
-		for (var i = 0; i < k; i++)
-		{
-			var a = MathFactory.GenerateRandom(2, (prime - 2));
-			var x = MathFactory.PowMod(a, d, prime);
-
-			if (x == 1 || x == (prime - 1))
-			{
-				continue;
-			}
-
-			var broken = false;
-			for (var j = 0; j < (r - 1); j++)
-			{
-				x = MathFactory.PowMod(x, 2, prime);
-
-				if (x == 1)
-				{
-					return false;
-				}
-				else if (x == (prime - 1))
-				{
-					broken = true;
-					break;
-				}
-			}
-
-			if (broken)
-			{
-				break;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return MathFactory.GenerateRandom(numbers.min, numbers.max);
 	}
 
 	MathFactory.GenerateRandom = function(min, max)
 	{
-		return Math.floor(Math.random() * (max - min + 1) + min);
+
+		return bigInt.randBetween(min, max);
 	}
 
 	MathFactory.IsEven = function(number)
@@ -231,18 +129,14 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 		return Math.log(b) / Math.log(a);
 	}
 
-	MathFactory.PowMod = function(a, b, c)
+	MathFactory.BitsToNumbers = function(bitLength)
 	{
-		debugger;
-		var result = a;
+		var min = bigInt(2);
 
-		for (var i = 0; i < (b - 1); i++)
-		{
-			var multiply = result * a;
-			result = multiply % c;
-		}
+		min = min.pow(bitLength - 1);
+		max = min.pow(2).subtract(1);
 
-		return result;
+		return {'min': min.toString(), 'max': max.toString()};
 	}
 
 	return MathFactory;
