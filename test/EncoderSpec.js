@@ -1,4 +1,4 @@
-xdescribe("EncoderFactory", function() {
+describe("EncoderFactory", function() {
 	var EncoderFactory;
 
 	beforeEach(module('websiteApp.EncoderFactory'));
@@ -27,7 +27,7 @@ xdescribe("EncoderFactory", function() {
 
 	describe("HexToBase64", function() {
 		it("correctly encodes hex as base64", function() {
-			expect(EncoderFactory.Base64ToHex("54657374696E6720537472696E67")).toEqual("VGVzdGluZyBTdHJpbmc=");
+			expect(EncoderFactory.HexToBase64("54657374696E6720537472696E67")).toEqual("VGVzdGluZyBTdHJpbmc=");
 		});
 	});
 
