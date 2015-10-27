@@ -45,17 +45,51 @@ angular.module('websiteApp.EncoderFactory').factory('EncoderFactory', function()
 		return EncoderFactory.AsciiToBase64(ascii);
 	}
 
-	EncoderFactory.HexToASN1 = function(hexString)
+	EncoderFactory.ASN1ToString = function(asn1String)
 	{
-		debugger;
-		var stringifiedASN1 = '';
+		var hexString = EncoderFactory.Base64ToHex(asn1String);
+		var ascii = '';
 
-		var hexValue = null;
-
-		for (var i = 0; i < hexString.length; i+=2)
+		while (hexString.length > 0)
 		{
-			hexValue = hexString.substring(i, 2);
+			var temp = hexString.substr(0, 2);
+			hexString = hexString.substr(2);
+
+			switch(temp)
+			{
+				case 30:
+					ascii += "SEQUENCE";
+
+			}
 		}
+	}
+
+	EncoderFactory.ASN1DecodeTag = function(hexString)
+	{
+		var ascii = '';
+		var temp = hexString.substr(0, 2);
+		hexString = hexString.substr(2);
+
+		switch(temp)
+		{
+			case 02:
+				ascii += "INTEGER";
+				break;
+			case 06:
+				ascii += "OBJECT";
+				break;
+			case 30:
+				ascii += "SEQUENCE";
+				break;
+		}
+
+		return {'ascii': ascii, 'hexString': hexString};
+	}
+
+	EncoderFactory.ASN1DecodeLength = function(hexString)
+	{
+		var ascii = '';
+
 	}
 
 	return EncoderFactory;
