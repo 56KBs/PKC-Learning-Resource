@@ -19,31 +19,21 @@ angular.module('websiteApp.EncoderFactory').factory('EncoderFactory', function()
 		var ascii = EncoderFactory.Base64ToAscii(base64String);
 		var hex = '';
 
-		while (ascii.length > 0)
+		for (var i = 0; i < ascii.length; i++)
 		{
-			var temp = ascii.substr(0, 1);
-			ascii = ascii.substr(1);
+			var hexCode = ascii.charCodeAt(i).toString(16).toUpperCase();
 
+			if (hexCode.length == 1)
+			{
+				hexCode = '0' + hexCode;
+			}
 
-			hex += ("00" + temp.charCodeAt(0).toString(16)).substr(-2).toUpperCase();
+			hex += hexCode;
 		}
 
 		return hex;
 	}
 
-	EncoderFactory.HexToBase64 = function(hexString)
-	{
-		var ascii = '';
-
-		while (hexString.length > 0)
-		{
-			var temp = parseInt(hexString.substr(0, 2), 16);
-			hexString = hexString.substr(2);
-			ascii += String.fromCharCode(temp);
-		}
-
-		return EncoderFactory.AsciiToBase64(ascii);
-	}
 
 	EncoderFactory.HexToASN1 = function(hexString)
 	{
