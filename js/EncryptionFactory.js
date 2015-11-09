@@ -1,6 +1,6 @@
-angular.module('websiteApp.EncryptionFactory', ['websiteApp.MathFactory', 'websiteApp.EncoderFactory']);
+angular.module('websiteApp.EncryptionFactory', ['websiteApp.MathFactory']);
 
-angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', function(MathFactory, EncoderFactory)
+angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', function(MathFactory)
 {
 	var EncryptionFactory = {};
 
@@ -22,15 +22,24 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 					   'publicKey': null,
 					   'privateKey': null };
 
-	   values['primeP'] = MathFactory.GeneratePrimeFromBits(bitLength).toString();
-	   values['primeQ'] = MathFactory.GeneratePrimeFromBits(bitLength).toString();
+	   values['primeP'] = MathFactory.GeneratePrimeFromBits(bitLength / 2).toString();
+	   values['primeQ'] = MathFactory.GeneratePrimeFromBits(bitLength / 2).toString();
 
 	   values['valueN'] = bigInt(values['primeP']).multiply(values['primeQ']).toString();
 	   values['bitLength'] = MathFactory.BitLength(values['valueN']);
 
+	   while (values['bitLength'] != bitLength)
+	   {
+	   	values['primeQ'] = MathFactory.GeneratePrimeFromBits(bitLength / 2).toString();
+
+		   values['valueN'] = bigInt(values['primeP']).multiply(values['primeQ']).toString();
+		   values['bitLength'] = MathFactory.BitLength(values['valueN']);
+	   }
+
 	   values['eulerValue'] = MathFactory.EulerTotientRSA(values['valueN'], values['primeP'], values['primeQ']).toString();
 
-	   values['valueE'] = MathFactory.GenerateCoprime(values['eulerValue']).toString();
+	   // Use the default RSA exponent
+	   values['valueE'] = "65537";
 
 	   values['valueD'] = MathFactory.ModularMultiplicativeInverse(values['valueE'], values['eulerValue']).toString();
 

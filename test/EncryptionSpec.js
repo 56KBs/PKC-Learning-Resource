@@ -1,9 +1,10 @@
 describe("EncryptionFactory", function() {
 	var EncryptionFactory;
 
-	beforeEach(module('websiteApp.EncryptionFactory'));
-	beforeEach(inject(function (_EncryptionFactory_) {
+	beforeEach(module('websiteApp.EncryptionFactory', 'websiteApp.MathFactory'));
+	beforeEach(inject(function (_EncryptionFactory_, _MathFactory_) {
 		EncryptionFactory = _EncryptionFactory_;
+		MathFactory = _MathFactory_;
 	}));
 
 	describe("GenerateKeys(false)", function() {
@@ -22,6 +23,24 @@ describe("EncryptionFactory", function() {
 			var RSAKeys = EncryptionFactory.GenerateKeys(false, 32);
 			expect(RSAKeys.privateKey).toBeDefined();
 			expect(RSAKeys.privateKey).not.toBeNull();
+		});
+
+		it("generates a key of the specified length", function()
+		{
+			var RSAKeys = EncryptionFactory.GenerateKeys(false, 64);
+			expect(MathFactory.BitLength(RSAKeys.privateKey.modulus)).toEqual(64);
+			expect(MathFactory.BitLength(RSAKeys.publicKey.modulus)).toEqual(64);
+
+			var RSAKeys = EncryptionFactory.GenerateKeys(false,32);
+			expect(MathFactory.BitLength(RSAKeys.privateKey.modulus)).toEqual(32);
+			expect(MathFactory.BitLength(RSAKeys.publicKey.modulus)).toEqual(32);
+		});
+
+		it("generates a key of the default length", function()
+		{
+			var RSAKeys = EncryptionFactory.GenerateKeys(false);
+			expect(MathFactory.BitLength(RSAKeys.privateKey.modulus)).toEqual(32);
+			expect(MathFactory.BitLength(RSAKeys.publicKey.modulus)).toEqual(32);
 		});
 
 		afterEach(function() {

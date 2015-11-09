@@ -119,7 +119,8 @@ describe("MathFactory", function() {
 			expect(MathFactory.BitLength(0)).toEqual(1);
 			expect(MathFactory.BitLength(50)).toEqual(6);
 			expect(MathFactory.BitLength(2389)).toEqual(12);
-			expect(MathFactory.BitLength(9876986759764754584856347347)).toEqual(93);
+			expect(MathFactory.BitLength("2389")).toEqual(12);
+			expect(MathFactory.BitLength("9876986759764754584856347347")).toEqual(93);
 		});
 	});
 
@@ -216,6 +217,20 @@ describe("MathFactory", function() {
 			expect(MathFactory.BaseLog(2, 128)).toEqual(7);
 			expect(MathFactory.BaseLog(8, 64)).toEqual(2);
 			expect(MathFactory.BaseLog(8, 512)).toEqual(3);
+		});
+	});
+
+	describe("BitsToNumbers", function()
+	{
+		it("correctly calculates the maximum value of a bit", function() {
+			expect(MathFactory.BitsToNumbers(32)['max']).toEqual("4294967295");
+			expect(MathFactory.BitsToNumbers(16)['max']).toEqual("65535");
+
+		});
+
+		it("correctly calculates the minimum value of a bit", function() {
+			expect(MathFactory.BitsToNumbers(32)['min']).toEqual("2147483648");
+			expect(MathFactory.BitsToNumbers(16)['min']).toEqual("32768");
 		});
 	});
 });

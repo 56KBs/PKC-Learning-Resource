@@ -100,7 +100,6 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 	MathFactory.GenerateRandom = function(min, max)
 	{
-
 		return bigInt.randBetween(min, max);
 	}
 
@@ -121,7 +120,7 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 	MathFactory.BitLength = function(a)
 	{
-		return a.toString(2).length;
+		return bigInt(a).toString(2).length;
 	}
 
 	MathFactory.BaseLog = function(a, b)
@@ -131,10 +130,8 @@ angular.module('websiteApp.MathFactory').factory('MathFactory', function()
 
 	MathFactory.BitsToNumbers = function(bitLength)
 	{
-		var min = bigInt(2);
-
-		min = min.pow(bitLength - 1);
-		max = min.pow(2).subtract(1);
+		var min = bigInt(2).pow(bitLength - 1);
+		var max = bigInt(2).pow(bitLength).subtract(1);
 
 		return {'min': min.toString(), 'max': max.toString()};
 	}
