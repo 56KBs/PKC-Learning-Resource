@@ -1,0 +1,39 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-attr-width="{{ svgDimensions.width }}" ng-attr-height="{{ svgDimensions.height }}" ng-mousedown="mouseDown($event)" ng-mouseup="mouseUp($event)" ng-mousemove="mouseMove($event)">
+	<defs>
+		<linearGradient id="nodeBlue" gradientTransform="rotate(90)">
+			<stop offset="0%" stop-color="#3399cc" />
+			<stop offset="100%" stop-color="#28abec" />
+		</linearGradient>
+	</defs>
+
+	<!-- Start Symbols -->
+		<!-- PC Node -->
+		<symbol id="pcNode" viewBox="0 0 200 170"> <!-- Default Size 200x170px -->
+			<path style="fill:#D1D3D4;" d="M-0.1,124.1c0,8.8,7.2,16,16,16h168.3c8.8,0,16-7.2,16-16V15.9c0-8.8-7.2-16-16-16H15.9c-8.8,0-16,7.2-16,16V124.1z"/>
+			<path style="fill:#58595B;" d="M200.1,18.6c0-10.3-6.7-18.7-15-18.7H14.9c-8.3,0-15,8.4-15,18.7v96.6h200.3V18.6z"/>
+			<polygon style="fill:#BCBEC0;" points="83.6,140.1 70.5,166.3 70.5,170 129.5,170 129.5,166.3 116.4,140.1 "/>		<rect x="18.5" y="13.3" style="fill:#414042;" width="162.9" height="91.6"/>
+		</symbol>
+
+		<!-- Ethernet Cable -->
+		<symbol id="ethernetConnector" viewBox="0 0 100 28">
+			<polygon style="fill:#434343;" points="0,1.5 0,26.7 1,28 35.8,28 35.8,0 1.4,0 	"/>
+			<polyline style="fill:#FFCB28;" points="1.3,4.2 1.3,6 12.8,6 12.8,4.2 	"/>
+			<polyline style="fill:#FFCB28;" points="1.3,22 1.3,23.7 12.8,23.7 12.8,22 	"/>
+			<polyline style="fill:#FFCB28;" points="1.3,8.7 1.3,10.4 12.8,10.4 12.8,8.7 	"/>
+			<polyline style="fill:#FFCB28;" points="1.3,13.1 1.3,14.9 12.8,14.9 12.8,13.1 	"/>
+			<polyline style="fill:#FFCB28;" points="1.3,17.5 1.3,19.3 12.8,19.3 12.8,17.5 	"/>
+			<rect x="35.8" y="8.2" style="fill:#3474BA;" width="63.9" height="11.5"/>
+		</symbol>
+	<!-- End Symbols -->
+
+	<g ng-repeat="node in graphicsData.nodes track by node.id">
+		<use xlink:href="#pcNode" ng-attr-id="{{ node.id }}" ng-attr-x="{{ node.point.x }}" ng-attr-y="{{ node.point.y }}" width="150" height="127"/>
+	</g>
+
+	<g ng-repeat="link in graphicsData.links track by link.id">
+		<use xlink:href="#ethernetConnector" ng-attr-id="{{ link.id }}" ng-attr-x="{{ getNodeX(link.source.nodeId, graphicsData) }}" ng-attr-y="{{ getNodeY(link.source.nodeId, graphicsData) }}" width="70" height="25"/>
+	</g>
+
+	<use xlink:href="#ethernetConnector" x="160" y="0" width="70" height="25"/>
+  Sorry, your browser does not support inline SVG.
+</svg>

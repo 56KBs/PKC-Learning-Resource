@@ -1,0 +1,9 @@
+#pcNode:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+#ethernetConnector:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
