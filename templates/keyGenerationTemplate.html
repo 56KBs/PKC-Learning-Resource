@@ -1,0 +1,41 @@
+<select name="keyLength" ng-model="keyLength">
+	<option value="32" ng-selected="true">32-Bit</option>
+	<option value="64">64-Bit</option>
+	<option value="128">128-Bit</option>
+	<option value="512">512-Bit</option>
+	<option value="1028">1028-Bit</option>
+</select>
+
+<button ng-click="generateKeys(keyLength)">Generate Keys</button>
+<br>
+<span ng-show="keyLength == 1028">This may take a while!</span>
+
+<h3>Key Length: {{ keys.bitLength }}</h3>
+<h3>Public Key:</h3>
+<h4>Modulus: {{ keys.publicKey.modulus }}</h4>
+<h4>Exponent: {{ keys.publicKey.exponent }}</h4>
+<h3>Private Key:</h3>
+<h4>Modulus: {{ keys.privateKey.modulus }}</h4>
+<h4>Exponent: {{ keys.privateKey.exponent }}</h4>
+<br>
+<br>
+
+<h2>Encrypt</h2>
+<form class="encrypt-form">
+	Key Modulus: <input type="text" ng-model="encryption.key.modulus" /><br>
+	Key Exponent: <input type="text" ng-model="encryption.key.exponent" /><br>
+	Message: <input type="text" ng-model="encryption.message.plaintext" /><br>
+	<input type="submit" ng-click="encrypt()" value="Encrypt" />
+	<br>
+	Encrypted: <input type="text" ng-model="encryption.message.encrypted" />
+</form>
+
+<h2>Decrypt</h2>
+<form class="encrypt-form">
+	Key Modulus: <input type="text" ng-model="decryption.key.modulus" /><br>
+	Key Exponent: <input type="text" ng-model="decryption.key.exponent" /><br>
+	Message: <input type="text" ng-model="decryption.message.encrypted" /><br>
+	<input type="submit" ng-click="decrypt()" value="Decrypt" />
+	<br>
+	Encrypted: <input type="text" ng-model="decryption.message.plaintext" />
+</form>
