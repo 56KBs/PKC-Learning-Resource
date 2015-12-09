@@ -36,7 +36,7 @@ angular.module('websiteApp.EncryptionDirectives')
 	$scope.decrypt = function()
 	{
 		console.log("Decrypting");
-		$scope.decryption.message.plaintext = EncryptionFactory.DecryptData($scope.decryption.message.plaintext, $scope.decryption.key);
+		$scope.decryption.message.plaintext = EncryptionFactory.DecryptData($scope.decryption.message.encrypted, $scope.decryption.key);
 	}
 
 	console.log("ELLO");
