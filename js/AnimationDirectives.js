@@ -14,8 +14,18 @@ angular.module('websiteApp.AnimationDirectives')
 	}
 })
 
+.directive('graphicsAreaData', function()
+{
+    return {
+        restrict: 'E',
+        template: 'Graphics Data: {{ graphicsData }}',
+        controller: 'graphicsController'
+    }
+})
+
 .controller('graphicsController', ['$scope', 'AnimationService', function graphicsController($scope, AnimationService)
 {
+    // Default data for testing with
 	$scope.graphicsData = {
 		nodes: {
 			pcNode1: {
@@ -48,15 +58,17 @@ angular.module('websiteApp.AnimationDirectives')
 		}
 	};
 
+	var isDragging = false;
+	var mousePoint = {
+	    x: 0,
+	    y: 0
+	};
+
 	$scope.svgDimensions = {
 		width: 800,
 		height: 600
 	};
-	var isDragging = false;
-	var mousePoint = {
-		x: 0,
-		y: 0
-	};
+
 
 	$scope.getNodeX = function(nodeId, graphicsData)
 	{
