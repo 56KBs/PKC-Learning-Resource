@@ -7,23 +7,56 @@ angular.module('websiteApp.AnimationService').service('AnimationService', functi
     };
 
     this.getId = function (element) {
-        return element.target.getAttribute("id");
+        var id = element.target.getAttribute("id");
+
+        if (id == null)
+        {
+            throw "AttributeNotFoundException";
+        }
+
+        return id;
     };
 
     this.getWidth = function (element) {
-        return parseInt(element.target.getAttribute("width"));
+        var width = parseInt(element.target.getAttribute("width"));
+
+        if (width == null)
+        {
+            throw "AttributeNotFoundException";
+        }
+
+        return width;
     };
 
     this.getHeight = function (element) {
-        return parseInt(element.target.getAttribute("height"));
+        var height = parseInt(element.target.getAttribute("height"));
+
+        if (height == null)
+        {
+            throw "AttributeNotFoundException";
+        }
+
+        return height;
     };
 
     this.getX = function (element) {
-        return parseInt(element.target.getAttribute("x"));
+        var x = parseInt(element.target.getAttribute("x"));
+
+        if (x == null) {
+            throw "AttributeNotFoundException";
+        }
+
+        return x;
     };
 
     this.getY = function (element) {
-        return parseInt(element.target.getAttribute("y"));
+        var y = parseInt(element.target.getAttribute("y"));
+
+        if (y == null) {
+            throw "AttributeNotFoundException";
+        }
+
+        return y;
     };
 
     this.withinXBounds = function (deltaX, element, width) {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{500522CD-5872-41EF-8388-CB9AC5AF3768}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,8 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js", "js", "{1078799B-EEAF-442F-A564-800B6DFE0834}"
 	ProjectSection(SolutionItems) = preProject
 		js\AnimationDirectives.js = js\AnimationDirectives.js
+		js\AnimationModelFactory.js = js\AnimationModelFactory.js
 		js\AnimationService.js = js\AnimationService.js
-		js\AnimationViewModel.js = js\AnimationViewModel.js
 		js\EncryptionDirectives.js = js\EncryptionDirectives.js
 		js\EncryptionFactory.js = js\EncryptionFactory.js
 		js\MathService.js = js\MathService.js

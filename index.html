@@ -4,12 +4,25 @@
 	<title>AngularJS RSA</title>
 	<link rel="stylesheet" type="text/css" href="svgstyle.css">
 	<meta charset="UTF-8">
+    
+    <!-- Temporary hack to stop KIS filling my console -->
+        <script type="text/javascript">
+            window.setTimeoutOrig = window.setTimeout;
+            window.setTimeout     = function(f,del) 
+            { 
+            var l_stack = Error().stack.toString();
+            if (l_stack.indexOf('kis.scr.kaspersky-labs.com') > 0) 
+                { return 0; }
+            
+            window.setTimeoutOrig(f,del); 
+            }
+        </script>
 </head>
 <body ng-controller="TestController">
 	<h1>Hello World</h1>
 
 	<h2>Animation Toolkit</h2>
-	<graphics-area></graphics-area>
+	<graphics-area canvas-height="600" canvas-width="800"></graphics-area>
 	<br>
 	<h2>Key Generation</h2>
 	<key-generation></key-generation>
@@ -18,11 +31,14 @@
 	<script src="thirdparty/BigInteger.js"></script>
 
 	<!-- Include our AngularJS RSA Service -->
-	<script src="js/myApp.js"></script>
-	<script src="js/MathService.js"></script>
-	<script src="js/EncryptionFactory.js"></script>
-	<script src="js/AnimationService.js"></script>
-	<script src="js/AnimationDirectives.js"></script>
-	<script src="js/EncryptionDirectives.js"></script>
+	<script src="app/myApp.js"></script>
+	<script src="app/MathService.js"></script>
+	<script src="app/EncryptionFactory.js"></script>
+	<script src="app/AnimationService.js"></script>
+	<script src="app/AnimationDirectives.js"></script>
+	<script src="app/EncryptionDirectives.js"></script>
+    
+    <!-- New formatted stuff -->
+    <script src="app/animation/pc-node-directive.js"></script>
 </body>
 </html>

@@ -14,7 +14,8 @@ angular.module('websiteApp.AnimationModelFactory').factory('AnimationModelFactor
                 point: {
                     x: 0,
                     y: 0
-                }
+                },
+                selected: false
             },
             pcNode2: {
                 id: "pcNode2",
@@ -22,7 +23,8 @@ angular.module('websiteApp.AnimationModelFactory').factory('AnimationModelFactor
                 point: {
                     x: 450,
                     y: 0
-                }
+                },
+                selected: false
             }
         },
         links: {
@@ -33,7 +35,8 @@ angular.module('websiteApp.AnimationModelFactory').factory('AnimationModelFactor
                 },
                 destination: {
                     nodeId: "pcNode2"
-                }
+                },
+                selected: false
             }
         }
     };
