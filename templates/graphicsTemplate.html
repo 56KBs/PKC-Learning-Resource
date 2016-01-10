@@ -28,7 +28,7 @@
 	<!-- End Symbols -->
 
 	<g ng-repeat="node in graphicsData.nodes track by node.id">
-        <pc-node data="node" canvas-width="$parent.canvas.width" canvas-height="$parent.canvas.height"></pc-node>
+        <pc-node data="node" canvas="$parent.canvas"></pc-node>
 		<!--<use xlink:href="#pcNode" ng-attr-id="{{ node.id }}" ng-attr-x="{{ node.point.x }}" ng-attr-y="{{ node.point.y }}" width="150" height="127" ng-class="{selected: node.selected}"/>-->
 	</g>
 

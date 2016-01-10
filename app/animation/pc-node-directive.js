@@ -1,20 +1,10 @@
 angular.module('websiteApp.Animation', [])
-
-.directive('pcNode', ['$document', function($document) {
+.directive('draggable', ['$document', function($document) {
     return {
-        restrict: 'E',
-        scope: {
-            data: '=',
-            canvasHeight: '=',
-            canvasWidth: "="
-        },
-        // Supposedly fixes SVG custom elements
-        templateNamespace: 'svg',
-        replace: true,
-        
-        controller: 'pcNodeController',
-        template: '<use xlink:href="#pcNode" ng-attr-id="{{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" ng-class="{selected: data.selected}"/>',
-        link: function($scope, element, attr) {
+        restrict: 'A',
+        scope: false,
+        controller: 'draggableController',
+        link: function($scope, element, attr) {          
             var startPoint = {
                 x: $scope.data.point.x,
                 y: $scope.data.point.y
@@ -24,14 +14,6 @@ angular.module('websiteApp.Animation', [])
                 x: 0,
                 y: 0
             };
-            
-            var canvas = {
-                height: $scope.canvasHeight,
-                width: $scope.canvasWidth
-            };
-            
-            console.log($scope.canvasHeight);
-            console.log(canvas);
             
             element.on('mousedown', function(event) {
                 event.preventDefault();
@@ -64,13 +46,13 @@ angular.module('websiteApp.Animation', [])
             
             function withinXBounds(deltaX) {
                 var newElementX = $scope.data.point.x + deltaX;
-                return newElementX >= 0 && newElementX + 150 <= canvas.width;
+                return newElementX >= 0 && newElementX + 150 <= $scope.canvas.width;
             };
 
             function withinYBounds(deltaY) {
                 var newElementY = $scope.data.point.y + deltaY;
                 
-                return newElementY >= 0 && newElementY + 127 <= canvas.height;
+                return newElementY >= 0 && newElementY + 127 <= $scope.canvas.height;
             };
             
             element.on('mouseup', function(event) {                
@@ -80,6 +62,11 @@ angular.module('websiteApp.Animation', [])
                     $scope.data.selected = true;
                     console.log("selected");
                 }
+                else
+                {
+                    // Reset start point for next potential click
+                    startPoint = $scope.data.point;
+                }
                 console.log("mouseup");
                 
                 $document.off('mousemove', mouseMove);
@@ -87,7 +74,28 @@ angular.module('websiteApp.Animation', [])
         }
     };
 }])
+.controller('draggableController', ['$scope', function draggableController($scope) {
+    console.log("Draggable controller initialized");
+}])
+.directive('pcNode', ['$document', function($document) {
+    return {
+        restrict: 'E',
+        scope: {
+            data: '=',
+            canvas: '='
+        },
+        // Supposedly fixes SVG custom elements
+        templateNamespace: 'svg',
+        replace: true,
+        
+        controller: 'pcNodeController',
+        template: '<use xlink:href="#pcNode" ng-attr-id="{{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" ng-class="{selected: data.selected}" draggable/>',
+        link: function($scope, element, attr) {
+            
+        }
+    };
+}])
 .controller('pcNodeController', ['$scope', function pcNodeController($scope) {
     console.log("pcNodeController");
-    console.log($scope.data);
+    
 }]);
