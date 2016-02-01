@@ -18,8 +18,8 @@ module.exports = function(config) {
       'thirdparty/angular.min.js',
       'thirdparty/BigInteger.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'js/myApp.js',
-      'js/*.js',
+      'app/myApp.js',
+      'app/*.js',
       'test/**/*Spec.js'
     ],
 
