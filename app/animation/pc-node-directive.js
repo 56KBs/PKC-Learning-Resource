@@ -1,4 +1,4 @@
-angular.module('websiteApp.Animation', [])
+angular.module('websiteApp.SVGAnimation.Nodes', [])
 .directive('draggable', ['$document', function($document) {
     return {
         restrict: 'A',
@@ -56,17 +56,9 @@ angular.module('websiteApp.Animation', [])
             };
             
             element.on('mouseup', function(event) {                
-                if (JSON.stringify(startPoint) == JSON.stringify($scope.data.point))
-                {
-                    // Select this item
-                    $scope.data.selected = true;
-                    console.log("selected");
-                }
-                else
-                {
-                    // Reset start point for next potential click
-                    startPoint = $scope.data.point;
-                }
+                // Reset start point for next potential click
+                startPoint = $scope.data.point;
+                    
                 console.log("mouseup");
                 
                 $document.off('mousemove', mouseMove);
@@ -89,7 +81,7 @@ angular.module('websiteApp.Animation', [])
         replace: true,
         
         controller: 'pcNodeController',
-        template: '<use xlink:href="#pcNode" ng-attr-id="{{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" ng-class="{selected: data.selected}" draggable/>',
+        template: '<use xlink:href="#pcNode" ng-attr-id="{{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" draggable/>',
         link: function($scope, element, attr) {
             
         }

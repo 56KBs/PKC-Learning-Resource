@@ -1,3 +1,4 @@
+<div class="controls" ng-click="addNode()"><button >Add Node</button></div>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-attr-width="{{ canvas.width }}" ng-attr-height="{{ canvas.height }}" ng-mousedown="mouseDown($event)" ng-mouseup="mouseUp($event)" ng-mousemove="mouseMove($event)">
 	<defs>
 		<linearGradient id="nodeBlue" gradientTransform="rotate(90)">
@@ -29,13 +30,14 @@
 
 	<g ng-repeat="node in graphicsData.nodes track by node.id">
         <pc-node data="node" canvas="$parent.canvas"></pc-node>
-		<!--<use xlink:href="#pcNode" ng-attr-id="{{ node.id }}" ng-attr-x="{{ node.point.x }}" ng-attr-y="{{ node.point.y }}" width="150" height="127" ng-class="{selected: node.selected}"/>-->
 	</g>
 
 	<g ng-repeat="link in graphicsData.links track by link.id">
-		<use xlink:href="#ethernetConnector" ng-attr-id="{{ link.id }}" ng-attr-x="{{ getNodeX(link.source.nodeId, graphicsData) }}" ng-attr-y="{{ getNodeY(link.source.nodeId, graphicsData) }}" width="70" height="25"/>
+		<link-node data="link" source-node="$parent.graphicsData.nodes[link.source.nodeId]" destination-node="$parent.graphicsData.nodes[link.destination.nodeId]" canvas="$parent.canvas"></link-node>
 	</g>
 
-	<use xlink:href="#ethernetConnector" x="160" y="0" width="70" height="25" style="opacity: 0.7"/>
   Sorry, your browser does not support inline SVG.
 </svg>
+
+<!-- Beautified JSON Data -->
+<pre style="float: left"><code><graphics-area-data graphics-data="graphicsData"></graphics-area-data></code></pre>

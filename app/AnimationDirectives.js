@@ -16,14 +16,22 @@ angular.module('websiteApp.AnimationDirectives')
 	}
 })
 
-/*.directive('graphicsAreaData', function()
+.directive('graphicsAreaData', function()
 {
     return {
         restrict: 'E',
-        template: 'Graphics Data: {{ graphicsData }}',
-        controller: 'graphicsController'
+        scope: {
+            graphicsData: "="
+        },
+        template: 'Graphics Data: {{ graphicsDataPrettified }}',
+        link: function($scope, element, attr) {
+            console.log($scope.graphicsData);
+            $scope.$watch('graphicsData', function(newValue, oldValue) {
+                $scope.graphicsDataPrettified = JSON.stringify($scope.graphicsData, null, 2);
+            }, true);
+        }
     }
-})*/
+})
 
 .controller('graphicsController', ['$scope', 'AnimationService', function graphicsController($scope, AnimationService)
 {
@@ -37,10 +45,7 @@ angular.module('websiteApp.AnimationDirectives')
 					x: 0,
 					y: 0
 				},
-				selected: false,
-			    options: {
-			        draggable: true
-	            }
+				selected: false
 			},
 			pcNode2: {
 				id: "pcNode2",
@@ -49,12 +54,9 @@ angular.module('websiteApp.AnimationDirectives')
 					x: 450,
 					y: 0
 				},
-				selected: false,
-				options: {
-				    draggable: true
-				}
+				selected: false
 			}
-		},
+        },
 		links: {
 			connection1: {
 				id: "connection1",
@@ -64,18 +66,47 @@ angular.module('websiteApp.AnimationDirectives')
 				destination: {
 					nodeId: "pcNode2"
 				},
-				selected: false,
-				options: {
-				    draggable: true
-				}
+				selected: false
 			}
-		}
+		},
+        counters: {
+            nextNodeId: 3
+        }
 	};
     
     $scope.canvas = {
 		width: $scope.canvasWidth,
 		height: $scope.canvasHeight
 	};
+    
+    // Used for allowing links to follow the nodes
+    $scope.getNodeX = function (nodeId, graphicsData)
+	{
+		return AnimationService.getSourcePointX(nodeId, graphicsData);
+	}
+
+	$scope.getNodeY = function(nodeId, graphicsData)
+	{
+		return AnimationService.getSourcePointY(nodeId, graphicsData);
+	}
+    
+    // Control panel
+    $scope.addNode = function()
+    {
+        var nextNodeId = $scope.graphicsData.counters.nextNodeId;
+        
+        $scope.graphicsData.nodes["pcNode" + nextNodeId] = {
+            "id": nextNodeId,
+            "name": "Example Node #" + nextNodeId,
+            "point": {
+                "x": 0,
+                "y": 0
+            },
+            "selected": false
+        }
+        
+        $scope.graphicsData.counters.nextNodeId++;
+    }
 
 	console.log("Graphics Controller");
 }])
