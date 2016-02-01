@@ -59,14 +59,59 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 
 	EncryptionFactory.EncryptData = function(dataToEncrypt, encryptionKey)
 	{
-		// Encrypts Data
-		return bigInt(dataToEncrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+	    var paddedData = EncryptionFactory.StringAsPaddedAscii(dataToEncrypt);
+
+	    // Encrypts Data
+		return bigInt(parseInt(paddedData)).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+	}
+
+	EncryptionFactory.StringAsPaddedAscii = function(dataToPad) {
+	    var asciiString = "";
+
+	    for (i = 0; i < dataToPad.length; i++) {
+	        asciiString += EncryptionFactory.PadNumericValue(dataToPad.charCodeAt(i), 3);
+	    }
+
+	    return asciiString;
+	}
+
+	EncryptionFactory.PadNumericValue = function(dataToPad, paddingSize) {
+	    var dataAsString = dataToPad + "";
+
+	    while (dataAsString.length < paddingSize) {
+	        dataAsString = "0" + dataAsString;
+	    }
+
+	    return dataAsString;
 	}
 
 	EncryptionFactory.DecryptData = function(dataToDecrypt, encryptionKey)
 	{
 		// Decrypts Data
-		return bigInt(dataToDecrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+	    var decryptedData = bigInt(dataToDecrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+
+	    console.log(decryptedData);
+
+	    return EncryptionFactory.PaddedAsciiAsString(decryptedData);
+	}
+
+	EncryptionFactory.PaddedAsciiAsString = function(dataToConvert)
+	{
+	    var dataString = "";
+
+	    if (dataToConvert.length % 3 != 0)
+	    {
+	        dataString += String.fromCharCode(parseInt(dataToConvert.substring(0, 2)));
+	        dataToConvert = dataToConvert.substring(2);
+	    }
+
+	    while (dataToConvert.length > 0)
+	    {
+	        dataString += String.fromCharCode(parseInt(dataToConvert.substring(0, 3)));
+	        dataToConvert = dataToConvert.substring(3);
+	    }
+
+	    return dataString;
 	}
 
 	return EncryptionFactory;
