@@ -61,10 +61,12 @@ angular.module('websiteApp.AnimationDirectives')
 			connection1: {
 				id: "connection1",
 				source: {
-					nodeId: "pcNode1"
+				    nodeId: "pcNode1",
+                    position: 1
 				},
 				destination: {
-					nodeId: "pcNode2"
+				    nodeId: "pcNode2",
+                    position: 1
 				},
 				selected: false
 			}

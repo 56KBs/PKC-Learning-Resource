@@ -2,11 +2,11 @@ angular.module('websiteApp.EncryptionDirectives', ['websiteApp.EncryptionDirecti
 
 angular.module('websiteApp.EncryptionDirectives')
 
-.directive('keyGeneration', function()
+.directive('keyGenerator', function()
 {
 	return {
 		restrict: 'E',
-		templateUrl: 'templates/keyGenerationTemplate.html',
+		templateUrl: '/app/encryption/key-generation-directive.tpl.html',
 		controller: 'encryptionController'
 	}
 })
@@ -38,6 +38,4 @@ angular.module('websiteApp.EncryptionDirectives')
 		console.log("Decrypting");
 		$scope.decryption.message.plaintext = EncryptionFactory.DecryptData($scope.decryption.message.encrypted, $scope.decryption.key);
 	}
-
-	console.log("ELLO");
 }])
