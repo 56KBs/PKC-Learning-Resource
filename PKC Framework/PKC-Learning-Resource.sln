@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{500522CD-5872-41EF-8388-CB9AC5AF3768}"
+	ProjectSection(SolutionItems) = preProject
+		index.html = index.html
+		svgstyle.css = svgstyle.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{9ABC3135-210D-4086-9977-E75017D32272}"
+	ProjectSection(SolutionItems) = preProject
+		templates\graphicsTemplate.html = templates\graphicsTemplate.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{44CE395E-63C0-4D1F-A4F1-CAA4220B42B6}"
+	ProjectSection(SolutionItems) = preProject
+		test\EncryptionSpec.js = test\EncryptionSpec.js
+		test\MathSpec.js = test\MathSpec.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{B3DE02A7-0160-45B1-A8CD-D1222B8C5C35}"
+	ProjectSection(SolutionItems) = preProject
+		app\AnimationDirectives.js = app\AnimationDirectives.js
+		app\AnimationModelFactory.js = app\AnimationModelFactory.js
+		app\AnimationService.js = app\AnimationService.js
+		app\EncryptionFactory.js = app\EncryptionFactory.js
+		app\MathService.js = app\MathService.js
+		app\myApp.js = app\myApp.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "animation", "animation", "{2F167D0B-6C7E-45DB-86D3-467049E08404}"
+	ProjectSection(SolutionItems) = preProject
+		app\animation\link-directive.js = app\animation\link-directive.js
+		app\animation\link-directive.tpl.html = app\animation\link-directive.tpl.html
+		app\animation\pc-node-directive.js = app\animation\pc-node-directive.js
+		app\animation\svg-animation.js = app\animation\svg-animation.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "encryption", "encryption", "{58DEFB56-1EA4-418D-B369-9A88123DAD32}"
+	ProjectSection(SolutionItems) = preProject
+		app\encryption\EncryptionDirectives.js = app\encryption\EncryptionDirectives.js
+		app\encryption\key-generation-directive.tpl.html = app\encryption\key-generation-directive.tpl.html
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9ABC3135-210D-4086-9977-E75017D32272} = {500522CD-5872-41EF-8388-CB9AC5AF3768}
+		{44CE395E-63C0-4D1F-A4F1-CAA4220B42B6} = {500522CD-5872-41EF-8388-CB9AC5AF3768}
+		{B3DE02A7-0160-45B1-A8CD-D1222B8C5C35} = {500522CD-5872-41EF-8388-CB9AC5AF3768}
+		{2F167D0B-6C7E-45DB-86D3-467049E08404} = {B3DE02A7-0160-45B1-A8CD-D1222B8C5C35}
+		{58DEFB56-1EA4-418D-B369-9A88123DAD32} = {B3DE02A7-0160-45B1-A8CD-D1222B8C5C35}
+	EndGlobalSection
+EndGlobal

@@ -22,7 +22,10 @@ angular.module('websiteApp.EncryptionDirectives')
 			bitLength = 32;
 		}
 
+		var start = performance.now();
 		$scope.keys = EncryptionFactory.GenerateKeys(true, bitLength);
+		var end = performance.now();
+		console.log("Generating " + bitLength + "-bit key took: " + (end - start) + "ms");
 		console.log($scope.keys);
 	}
 

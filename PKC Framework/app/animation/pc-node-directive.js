@@ -81,7 +81,7 @@ angular.module('websiteApp.SVGAnimation.Nodes', [])
         replace: true,
         
         controller: 'pcNodeController',
-        template: '<use xlink:href="#pcNode" ng-attr-id="{{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" draggable/>',
+        template: '<use xlink:href="#pcNode" ng-attr-id="pcNode {{ data.id }}" ng-attr-x="{{ data.point.x }}" ng-attr-y="{{ data.point.y }}" width="150" height="127" draggable/>',
         link: function($scope, element, attr) {
             
         }
