@@ -26,6 +26,14 @@ describe("Rail Fence Encryption Service", function() {
 			var decrypted = EncryptionService.Decrypt("WECRLTEERDSOEEFEAOCAIVDEN", 3);
 			expect(decrypted).toEqual("WE ARE DISCOVERED FLEE AT ONCE");
 		});
+
+		it("throws an error if missing message", function() {
+			expect(function() { EncryptionService.Decrypt("hi", undefined); }).toThrow(new Error("Missing arguments"));
+		});
+
+		it("throws an error if missing rail count", function() {
+			expect(function() { EncryptionService.Decrypt(undefined, 1); }).toThrow(new Error("Missing arguments"));
+		});
 	});
 
 	describe("Internal Functionality", function() {

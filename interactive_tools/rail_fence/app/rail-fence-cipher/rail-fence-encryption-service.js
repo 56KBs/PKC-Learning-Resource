@@ -9,7 +9,7 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 			throw new Error("Missing arguments");
 		}
 
-		var railFence = this.GenerateRailFence(message, railCount);
+		var railFence = this.GenerateEncryptionRailFence(message, railCount);
 
 		return this.ReadRailFence(railFence);
 
@@ -17,10 +17,46 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 
 	this.Decrypt = function(message, railCount)
 	{
+		if (message === undefined || railCount === undefined)
+		{
+			throw new Error("Missing arguments");
+		}
+
+		message = this.NormaliseMessage(message);
+		var railFence = this.GenerateEmptyRailFence(railCount);
+
+		var railIndex = 0;
+
+		for (var i = 0; i < message.length; i++)
+		{
+			railFence[railIndex].push(message[i]);
+
+			var padding = this.CalculatePadding(railIndex, railCount);
+		}
+
 		return this.Encrypt(message, railCount);
 	}
 
-	this.GenerateRailFence = function(message, railCount)
+	this.CalculatePadding = function(railIndex, railCount)
+	{
+		var padding = {
+			downward: 0,
+			upward: 0
+		};
+
+		if (railIndex == railCount - 1 || railIndex == 0)
+		{
+			padding.upward = ((railCount - 1) * 2) - 1;
+			padding.downward = padding.upward;
+		}
+		else
+		{
+			padding.upward = (railIndex * 2) - 1;
+			padding.downward = ((railCount - railIndex) * 2) - 1;
+		}
+	}
+
+	this.GenerateEncryptionRailFence = function(message, railCount)
 	{
 		message = this.NormaliseMessage(message);
 		var railFence = this.GenerateEmptyRailFence(railCount);
