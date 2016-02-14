@@ -1,0 +1,17 @@
+.caesar-cipher {
+	width: 550px;
+	text-align: center;
+}
+
+div.caesar-cipher > div > div.btn-group > button {
+	width: 22px;
+}
+
+div.caesar-cipher > div.controls {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.caesar-cipher > div.form-inputs {
+	padding-top: 10px;
+}

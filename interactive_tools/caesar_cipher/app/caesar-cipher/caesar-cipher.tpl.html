@@ -1,0 +1,57 @@
+<div class="caesar-cipher">
+	<div>
+		<div class="btn-group btn-group-xs">
+			<button ng-repeat="char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' | chars" class="btn btn-default" ng-class="{'btn-primary': char == 'A'}">
+				{{ char }}
+			</button>
+		</div>
+	</div>
+
+	<div class="controls">
+		<h4><small>
+
+		<div class="btn-group btn-group-xs">
+			<button ng-click="shiftLeft()" class="btn btn-default">
+				<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			</button>
+		</div>
+
+		Shift by: {{ message.shift }}
+
+		<div class="btn-group btn-group-xs">
+			<button ng-click="shiftRight()" class="btn btn-default">
+				<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+			</button>
+		</div>
+
+		</small></h4>
+	</div>
+
+	<div>
+		<div class="btn-group btn-group-xs">
+			<button ng-repeat="char in exampleEncrypt() | chars" class="btn btn-default" ng-class="{'btn-primary': char == 'A'}" ng-click="setShiftByChar(char)">
+				{{ char }}
+			</button>
+		</div>
+	</div>
+
+	<div class="row form-inputs">
+		<div class="col-md-5">
+			<h4><small>Plaintext</small></h4>
+			<form class="plaintext-form">
+				<textarea type="text" class="form-control" ng-model="message.plaintext" placeholder="Plaintext" row="2" ng-pattern="inputPattern"/><br>
+			</form>
+		</div>
+
+		<div class="col-md-2">
+		</div>
+
+		<div class="col-md-5">
+			<h4><small>Ciphertext</small></h4>
+			<form class="ciphertext-form">
+				<textarea type="text" class="form-control" ng-model="message.ciphertext" placeholder="Ciphertext" row="2" /><br>
+			</form>
+		</div>
+	</div>
+</div>
+
