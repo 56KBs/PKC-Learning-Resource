@@ -7,9 +7,19 @@ describe("Rail Fence Encryption Service", function() {
 	}));
 
 	describe("Encryption", function() {
-		it("encrypts messages correctly", function() {
+		it("encrypts messages correctly with three rails", function() {
 			var encrypted = EncryptionService.Encrypt("WE ARE DISCOVERED FLEE AT ONCE", 3);
-			expect(encrypted).toEqual("WECRLTEERDSOEEFEAOCAIVDEN");
+			expect(encrypted.ciphertext).toEqual("WECRLTEERDSOEEFEAOCAIVDEN");
+		});
+
+		it("encrypts messages correctly with four rails", function() {
+			var encrypted = EncryptionService.Encrypt("WE ARE DISCOVERED FLEE AT ONCE", 4);
+			expect(encrypted.ciphertext).toEqual("WIREEEDSEEEACAECVDLTNROFO");
+		});
+
+		it("encrypts messages correctly with five rails", function() {
+			var encrypted = EncryptionService.Encrypt("WE ARE DISCOVERED FLEE AT ONCE", 5);
+			expect(encrypted.ciphertext).toEqual("WCLEESOFECAIVDENRDEEAOERT");
 		});
 
 		it("throws an error if missing message", function() {
@@ -22,9 +32,19 @@ describe("Rail Fence Encryption Service", function() {
 	});
 
 	describe("Decryption", function() {
-		it("decrypts messages correctly", function() {
+		it("decrypts messages correctly with three rails", function() {
 			var decrypted = EncryptionService.Decrypt("WECRLTEERDSOEEFEAOCAIVDEN", 3);
-			expect(decrypted).toEqual("WE ARE DISCOVERED FLEE AT ONCE");
+			expect(decrypted.plaintext).toEqual("WEAREDISCOVEREDFLEEATONCE");
+		});
+
+		it("decrypts messages correctly with four rails", function() {
+			var decrypted = EncryptionService.Decrypt("WIREEEDSEEEACAECVDLTNROFO", 4);
+			expect(decrypted.plaintext).toEqual("WEAREDISCOVEREDFLEEATONCE");
+		});
+
+		it("decrypts messages correctly with five rails", function() {
+			var decrypted = EncryptionService.Decrypt("Hreeeelhsiltohop", 5);
+			expect(decrypted.plaintext).toEqual("Hellotheresophie");
 		});
 
 		it("throws an error if missing message", function() {
@@ -54,6 +74,119 @@ describe("Rail Fence Encryption Service", function() {
 			var normalised = EncryptionService.NormaliseMessage(message);
 
 			expect(normalised).toEqual("WEAREDISCOVEREDFLEEATONCE");
+		});
+
+		describe("Padding calculation", function() {
+
+			var railCount = 0;
+
+			describe("2 rails", function () {
+				beforeEach(function() {
+					railCount = 2;
+				});
+
+				it("rail 1", function() {
+					var padding = EncryptionService.CalculatePadding(0, railCount);
+					expect(padding.downward).toEqual(1);
+					expect(padding.upward).toEqual(1);
+				});
+
+				it("rail 2", function() {
+					var padding = EncryptionService.CalculatePadding(1, railCount);
+					expect(padding.downward).toEqual(1);
+					expect(padding.upward).toEqual(1);
+				});
+			});
+
+			describe("3 rails", function () {
+				beforeEach(function() {
+					railCount = 3;
+				});
+
+				it("rail 1", function() {
+					var padding = EncryptionService.CalculatePadding(0, railCount);
+					expect(padding.downward).toEqual(3);
+					expect(padding.upward).toEqual(3);
+				});
+
+				it("rail 2", function() {
+					var padding = EncryptionService.CalculatePadding(1, railCount);
+					expect(padding.downward).toEqual(1);
+					expect(padding.upward).toEqual(1);
+				});
+
+				it("rail 3", function() {
+					var padding = EncryptionService.CalculatePadding(2, railCount);
+					expect(padding.downward).toEqual(3);
+					expect(padding.upward).toEqual(3);
+				});
+			});
+
+			describe("4 rails", function () {
+				beforeEach(function() {
+					railCount = 4;
+				});
+
+				it("rail 1", function() {
+					var padding = EncryptionService.CalculatePadding(0, railCount);
+					expect(padding.downward).toEqual(5);
+					expect(padding.upward).toEqual(5);
+				});
+
+				it("rail 2", function() {
+					var padding = EncryptionService.CalculatePadding(1, railCount);
+					expect(padding.downward).toEqual(3);
+					expect(padding.upward).toEqual(1);
+				});
+
+				it("rail 3", function() {
+					var padding = EncryptionService.CalculatePadding(2, railCount);
+					expect(padding.downward).toEqual(1);
+					expect(padding.upward).toEqual(3);
+				});
+
+				it("rail 4", function() {
+					var padding = EncryptionService.CalculatePadding(3, railCount);
+					expect(padding.downward).toEqual(5);
+					expect(padding.upward).toEqual(5);
+				});
+			});
+
+			describe("5 rails", function () {
+				beforeEach(function() {
+					railCount = 5;
+				});
+
+				it("rail 1", function() {
+					var padding = EncryptionService.CalculatePadding(0, railCount);
+					expect(padding.downward).toEqual(7);
+					expect(padding.upward).toEqual(7);
+				});
+
+				it("rail 2", function() {
+					var padding = EncryptionService.CalculatePadding(1, railCount);
+					expect(padding.downward).toEqual(5);
+					expect(padding.upward).toEqual(1);
+				});
+
+				it("rail 3", function() {
+					var padding = EncryptionService.CalculatePadding(2, railCount);
+					expect(padding.downward).toEqual(3);
+					expect(padding.upward).toEqual(3);
+				});
+
+				it("rail 4", function() {
+					var padding = EncryptionService.CalculatePadding(3, railCount);
+					expect(padding.downward).toEqual(1);
+					expect(padding.upward).toEqual(5);
+				});
+
+				it("rail 5", function() {
+					var padding = EncryptionService.CalculatePadding(4, railCount);
+					expect(padding.downward).toEqual(7);
+					expect(padding.upward).toEqual(7);
+				});
+			});
 		});
 	});
 });

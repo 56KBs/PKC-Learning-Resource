@@ -11,7 +11,7 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 
 		var railFence = this.GenerateEncryptionRailFence(message, railCount);
 
-		return this.ReadRailFence(railFence);
+		return { railfence: railFence, ciphertext: this.ReadRailFenceCipherText(railFence) };
 
 	};
 
@@ -25,16 +25,41 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 		message = this.NormaliseMessage(message);
 		var railFence = this.GenerateEmptyRailFence(railCount);
 
+		var railStart = true;
 		var railIndex = 0;
+		var downwardZag = true;
+		var padding = this.CalculatePadding(railIndex, railCount);
 
 		for (var i = 0; i < message.length; i++)
 		{
+			for (var j = 0; j < railIndex && railStart; j++)
+			{
+				railFence[railIndex].push(".");
+			}
+
+			railStart = false;
+
 			railFence[railIndex].push(message[i]);
 
-			var padding = this.CalculatePadding(railIndex, railCount);
+			var amountToPad = downwardZag ? padding.downward : padding.upward;
+
+			for (var j = 0; j < amountToPad && railFence[railIndex].length < message.length; j++)
+			{
+				railFence[railIndex].push(".");
+			}
+
+			downwardZag = !downwardZag;
+			
+			if (railFence[railIndex].length == message.length && i != message.length - 1)
+			{
+				railIndex++;
+				railStart = true;
+				padding = this.CalculatePadding(railIndex, railCount);
+				downwardZag = true;
+			}
 		}
 
-		return this.Encrypt(message, railCount);
+		return { railfence: railFence, plaintext: this.ReadRailFencePlainText(railFence) };
 	}
 
 	this.CalculatePadding = function(railIndex, railCount)
@@ -52,16 +77,16 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 		else
 		{
 			padding.upward = (railIndex * 2) - 1;
-			padding.downward = ((railCount - railIndex) * 2) - 1;
+			padding.downward = (((railCount - 2) - railIndex) * 2) + 1;
 		}
+
+		return padding;
 	}
 
 	this.GenerateEncryptionRailFence = function(message, railCount)
 	{
 		message = this.NormaliseMessage(message);
 		var railFence = this.GenerateEmptyRailFence(railCount);
-
-		console.log(railFence);
 
 		var railIndex = 0;
 		var downwardZag = true;
@@ -89,6 +114,15 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 			}
 
 			railIndex = nextRailIndex;
+		}
+
+		// Pad all the rails to the full correct length
+		for (var i = 0; i < railFence.length; i++)
+		{
+			while (railFence[i].length < message.length)
+			{
+				railFence[i].push(".");
+			}
 		}
 
 		return railFence;
@@ -125,10 +159,10 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 		return normalisedMessage;
 	}
 
-	this.ReadRailFence = function(railFence)
+	this.ReadRailFenceCipherText = function(railFence)
 	{
 		// Read along the rails
-		var encryptedString = "";
+		var ciphertext = "";
 
 		for (var i = 0; i < railFence.length; i++)
 		{
@@ -136,11 +170,39 @@ angular.module('websiteApp.RailFenceCipher.EncryptionService').service('Encrypti
 			{
 				if (railFence[i][j] != ".")
 				{
-					encryptedString += railFence[i][j];
+					ciphertext += railFence[i][j];
 				}
 			}
 		}
 
-		return encryptedString;
+		return ciphertext;
+	}
+
+	this.ReadRailFencePlainText = function(railFence)
+	{
+		// Read along the zigzags
+		var plaintext = "";
+
+		var downwardZag = true;
+		var railIndex = 0;
+
+		for (var i = 0; i < railFence[0].length; i++)
+		{
+			plaintext += railFence[railIndex][i];
+
+			if (railIndex == 0 && !downwardZag)
+			{
+				downwardZag = true;
+			}
+			else if (railIndex == railFence.length - 1 && downwardZag)
+			{
+				downwardZag = false;
+			}
+
+			// Shift the rail index
+			railIndex = downwardZag ? railIndex + 1 : railIndex - 1;
+		}
+
+		return plaintext;
 	}
 });
