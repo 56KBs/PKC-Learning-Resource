@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btRailFenceCipher">
+		<field name="bID" type="I">
+			<key />
+			<unsigned />
+		</field>
+		<field name="plaintext" type="C">
+			<default value="Hello World" />
+		</field>
+		<field name="railamount" type="I2">
+			<default value="3" />
+		</field>
+	</table>
+</schema>

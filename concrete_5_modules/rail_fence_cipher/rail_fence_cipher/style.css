@@ -1,0 +1,60 @@
+.rail-fence-cipher {
+	width: 550px;
+	text-align: center;
+}
+
+div.rail-fence-cipher > div > div > div.btn-group > button {
+	width: 22px;
+}
+
+/* First button styling */
+div.rail-fence-cipher > div > div.first-row > div > button.first {
+	border-bottom-left-radius: 0;
+}
+
+div.rail-fence-cipher > div > div.middle-row > div > button.first {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+div.rail-fence-cipher > div > div.last-row > div > button.first {
+	border-top-left-radius: 0;
+}
+
+/* Last button styling */
+div.rail-fence-cipher > div > div.first-row > div > button.last {
+	border-bottom-right-radius: 0;
+}
+
+div.rail-fence-cipher > div > div.middle-row > div > button.last {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+div.rail-fence-cipher > div > div.last-row > div > button.last {
+	border-top-right-radius: 0;
+}
+
+/* Margin movements */
+div.rail-fence-cipher > div > div.first-row {
+	margin-bottom: -1px;
+}
+
+div.rail-fence-cipher > div > div.middle-row {
+	margin-bottom: -2px;
+}
+
+/* Other styling */
+div.rail-fence-cipher > div > div.rail-container > div > button {
+	color: #FFF;
+}
+
+
+div.rail-fence-cipher > div.controls {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.rail-fence-cipher  > div.form-inputs {
+	padding-top: 10px;
+}

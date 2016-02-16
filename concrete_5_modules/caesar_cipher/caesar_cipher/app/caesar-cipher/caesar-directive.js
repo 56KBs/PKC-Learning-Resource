@@ -4,6 +4,7 @@ angular.module('websiteApp.CaesarCipher.Directives').directive('caesarCipher', f
 	
 	// Find the script directory, fix to allow concrete5 blocks
 	var scripts = document.getElementsByTagName("script");
+	console.log(scripts);
 	var thisScript = scripts[scripts.length - 1];
 	var scriptDirectory = thisScript.src.substring(0, thisScript.src.lastIndexOf("/"));
 

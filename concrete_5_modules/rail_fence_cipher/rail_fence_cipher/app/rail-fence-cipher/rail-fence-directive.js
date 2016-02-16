@@ -1,6 +1,6 @@
-angular.module('websiteApp.RailFenceCipher.Directives', ['websiteApp.RailFenceCipher.EncryptionService']);
+angular.module('railFenceApp.RailFenceCipher.Directives', ['railFenceApp.RailFenceCipher.EncryptionService']);
 
-angular.module('websiteApp.RailFenceCipher.Directives').directive('railFenceCipher', function() {
+angular.module('railFenceApp.RailFenceCipher.Directives').directive('railFenceCipher', function() {
 	
 	// Find the script directory, fix to allow concrete5 blocks
 	var scripts = document.getElementsByTagName("script");
@@ -18,7 +18,7 @@ angular.module('websiteApp.RailFenceCipher.Directives').directive('railFenceCiph
 	}
 });
 
-angular.module('websiteApp.RailFenceCipher.Directives').controller('railFenceCipherController', ['$scope', 'EncryptionService', function railFenceCipherController($scope, EncryptionService) {
+angular.module('railFenceApp.RailFenceCipher.Directives').controller('railFenceCipherController', ['$scope', 'EncryptionService', function railFenceCipherController($scope, EncryptionService) {
 	$scope.message = {
 		plaintext: "",
 		ciphertext: "",

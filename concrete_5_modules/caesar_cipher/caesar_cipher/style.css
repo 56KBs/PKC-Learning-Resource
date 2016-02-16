@@ -1,0 +1,34 @@
+.caesar-cipher {
+	width: 550px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+div.caesar-cipher > div > div.btn-group > button {
+	width: 22px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+div.caesar-cipher > div.controls button {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 2px;
+}
+
+div.caesar-cipher button.btn-primary {
+	background-color: #b7e390;
+	color: #6e6e6e;
+}
+
+div.caesar-cipher > div.controls {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.caesar-cipher > div.form-inputs {
+	padding-top: 10px;
+}
