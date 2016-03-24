@@ -46,6 +46,11 @@ class Controller extends BlockController
         );
 
         $al->register(
+            'javascript', 'angularjsmodules', 'blocks/rail_fence_cipher/rail_fence_cipher/angular.ng-modules.js',
+            array('version' => '1.0.0', 'minify' => false, 'combine' => false)
+        );
+
+        $al->register(
             'javascript', 'bootstrap', 'blocks/rail_fence_cipher/rail_fence_cipher/bootstrap.js',
             array('version' => '3.3.6', 'minify' => false, 'combine' => false)
         );
@@ -57,6 +62,7 @@ class Controller extends BlockController
 
         $al->registerGroup('railfencecipher', array(
             array('javascript', 'angularjs'),
+            array('javascript', 'angularjsmodules'),
             array('javascript', 'railfencecipherapp'),
             array('javascript', 'railfencecipherdirective'),
             array('javascript', 'railfencecipherencryption'),

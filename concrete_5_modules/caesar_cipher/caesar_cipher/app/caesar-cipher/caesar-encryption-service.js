@@ -1,6 +1,6 @@
-angular.module('websiteApp.CaesarCipher.EncryptionService', []);
+angular.module('caesarApp.CaesarCipher.EncryptionService', []);
 
-angular.module('websiteApp.CaesarCipher.EncryptionService').service('EncryptionService', function()
+angular.module('caesarApp.CaesarCipher.EncryptionService').service('EncryptionService', function()
 {
 	this.Encrypt = function(message, shiftCount)
 	{

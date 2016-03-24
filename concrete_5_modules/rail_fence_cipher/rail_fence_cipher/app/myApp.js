@@ -1,9 +1,10 @@
-var websiteApp = angular.module('railFenceApp', ['railFenceApp.RailFenceCipher.Directives', 'railFenceApp.RailFenceCipher.EncryptionService']);
+var railFenceApp = angular.module('railFenceApp', ['railFenceApp.RailFenceCipher.Directives', 'railFenceApp.RailFenceCipher.EncryptionService']);
 
-websiteApp.controller('TestController', function($scope, EncryptionService) {
+railFenceApp.controller('TestController', function($scope, EncryptionService) {
+	console.log("Rail Fence Controller Triggered");
 });
 
-websiteApp.filter('chars', function() {
+railFenceApp.filter('chars', function() {
 	return function(input) {
 		if (!angular.isString(input)) {
 			return;

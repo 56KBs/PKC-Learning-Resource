@@ -46,6 +46,11 @@ class Controller extends BlockController
         );
 
         $al->register(
+            'javascript', 'angularjsmodules', 'blocks/caesar_cipher/caesar_cipher/angular.ng-modules.js',
+            array('version' => '1.0.0', 'minify' => false, 'combine' => false)
+        );
+
+        $al->register(
             'javascript', 'bootstrap', 'blocks/caesar_cipher/caesar_cipher/bootstrap.js',
             array('version' => '3.3.6', 'minify' => false, 'combine' => false)
         );
@@ -57,6 +62,7 @@ class Controller extends BlockController
 
         $al->registerGroup('caesarcipher', array(
             array('javascript', 'angularjs'),
+            array('javascript', 'angularjsmodules'),
             array('javascript', 'caesarcipherapp'),
             array('javascript', 'caesarcipherdirective'),
             array('javascript', 'caesarcipherencryption'),
