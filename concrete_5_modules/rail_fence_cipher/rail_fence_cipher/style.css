@@ -1,11 +1,29 @@
 .rail-fence-cipher {
 	width: 550px;
+	margin: 0 auto;
 	text-align: center;
 }
 
 div.rail-fence-cipher > div > div > div.btn-group > button {
+	padding: 2px;
 	width: 22px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
+
+div.rail-fence-cipher button.btn-primary {
+	background-color: #b7e390;
+	color: #6e6e6e;
+}
+
+div.rail-fence-cipher > div.controls button {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 2px;
+}
+
 
 /* First button styling */
 div.rail-fence-cipher > div > div.first-row > div > button.first {
@@ -47,6 +65,10 @@ div.rail-fence-cipher > div > div.middle-row {
 /* Other styling */
 div.rail-fence-cipher > div > div.rail-container > div > button {
 	color: #FFF;
+}
+
+div.rail-fence-cipher > div > div.rail-container > div > button.btn-primary {
+	color: #6e6e6e;
 }
 
 
