@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html ng-app="websiteApp">
+<head>
+	<title>AngularJS RSA</title>
+	<link rel="stylesheet" type="text/css" href="svgstyle.css">
+    <link rel="stylesheet" type="text/css" href="mainstyles.css">
+	<meta charset="UTF-8">
+
+    <!-- Include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <!-- Include Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    
+    <!-- Temporary hack to stop KIS filling my console -->
+    <script type="text/javascript">
+        window.setTimeoutOrig = window.setTimeout;
+        window.setTimeout     = function(f,del) 
+        { 
+        var l_stack = Error().stack.toString();
+        if (l_stack.indexOf('kis.scr.kaspersky-labs.com') > 0) 
+            { return 0; }
+            
+        window.setTimeoutOrig(f,del); 
+        }
+    </script>
+</head>
+<body ng-controller="TestController">
+
+	<graphics-area canvas-height="210" canvas-width="600"></graphics-area>
+
+	<!-- Include AngularJS 1.4.7 -->
+	<script src="thirdparty/angular.min.js"></script>
+	<script src="thirdparty/BigInteger.js"></script>
+
+	<!-- Include our AngularJS RSA Service -->
+	<script src="app/myApp.js"></script>
+	<script src="app/MathService.js"></script>
+	<script src="app/EncryptionFactory.js"></script>
+	<script src="app/AnimationService.js"></script>
+	<script src="app/AnimationDirectives.js"></script>
+    
+    <!-- New formatted stuff -->
+    <script src="app/animation/svg-animation.js"></script>
+    <script src="app/animation/pc-node-directive.js"></script>
+    <script src="app/animation/link-directive.js"></script>
+    <script src="app/animation/message-directive.js"></script>
+    <script src="app/encryption/EncryptionDirectives.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+.key-generator-directive-container {
+	margin: 0 auto;
+}
+
+.key-generator-container {
+}
+
+.key-container {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.key-container > .input-group {
+	padding-bottom: 5px;
+}
+
+.encryption-form {
+	text-align: left;
+}
+
+.decryption-form {
+	text-align: left;
+}
+
+.select-form-control {
+	width: auto !important;
+	display: inline-block !important;
+}
+
+.key-group {
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+#pcNode:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+
+.selected {
+    opacity: 0.7;
+}
+
+#ethernetConnector:hover {
+	opacity: 0.8;
+	cursor: pointer;
+}
+

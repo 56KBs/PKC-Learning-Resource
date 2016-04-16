@@ -202,11 +202,11 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Decrypt With</label>
 						<div class="col-sm-10">
-							<button id="evePopoverReceiveAPub" class="btn btn-default" ng-click="decryptMessageEve(communication.alice.publicKey, communication.message.ciphertext)">Alice Public Key</button>
+							<button id="decryptionPopoverReceiveAPub" class="btn btn-default" ng-click="decryptMessageEve(communication.alice.publicKey, communication.message.ciphertext)">Alice Public Key</button>
 							<button id="decryptionPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptMessageEve(communication.alice.privateKey, communication.message.ciphertext)" disabled>Alice Private Key</button>
-							<button id="evePopoverReceiveBPub" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.publicKey, communication.message.ciphertext)">Bob Public Key</button>
-							<button id="evePopoverReceiveBPriv" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.privateKey, communication.message.ciphertext)" disabled>Bob Private Key</button>
-							<button id="evePopoverReceiveNone" class="btn btn-default" ng-click="decryptMessageEve(null, communication.message.ciphertext)">None</button>
+							<button id="decryptionPopoverReceiveBPub" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.publicKey, communication.message.ciphertext)">Bob Public Key</button>
+							<button id="decryptionPopoverReceiveBPriv" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.privateKey, communication.message.ciphertext)" disabled>Bob Private Key</button>
+							<button id="decryptionPopoverReceiveNone" class="btn btn-default" ng-click="decryptMessageEve(null, communication.message.ciphertext)">None</button>
 						</div>
 					</div>
 
@@ -228,11 +228,11 @@
 					<div class="form-group" ng-show="animateData.authentication == true">
 						<label class="col-sm-2 control-label">Decrypt With</label>
 						<div class="col-sm-10">
-							<button id="eveDigestPopoverReceiveAPub" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.publicKey, communication.eavesdropping.encryptedDigest)">Alice Public Key</button>
-							<button id="eveDigestPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Alice Private Key</button>
-							<button id="eveDigestPopoverReceiveBPub" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.publicKey, communication.eavesdropping.encryptedDigest)">Bob Public Key</button>
-							<button id="eveDigestPopoverReceiveBPriv" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Bob Private Key</button>
-							<button id="eveDigestPopoverReceiveNone" class="btn btn-default" ng-click="decryptDigestEve(null, communication.eavesdropping.encryptedDigest)">None</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.publicKey, communication.eavesdropping.encryptedDigest)">Alice Public Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Alice Private Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.publicKey, communication.eavesdropping.encryptedDigest)">Bob Public Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Bob Private Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(null, communication.eavesdropping.encryptedDigest)">None</button>
 						</div>
 					</div>
 
@@ -329,10 +329,10 @@
 					<div class="form-group" ng-show="animateData.authentication == true">
 						<label class="col-sm-2 control-label">Decrypt With</label>
 						<div class="col-sm-10">
-							<button id="digestPopoverReceiveAPub" class="btn btn-success" ng-click="decryptDigest(communication.alice.publicKey, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
+							<button id="digestPopoverReceiveAPub" class="btn btn-warning" ng-click="decryptDigest(communication.alice.publicKey, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
 							<button id="digestPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptDigest(communication.alice.privateKey, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Using Alice's private key means when Bob receives the message, he can decrypt this using Alice's public key, authenticating that only Alice could have sent a message with this digest" data-trigger="hover" data-placement="top" disabled>Alice Private Key</button>
 							<button id="digestPopoverReceiveBPub" class="btn btn-danger" ng-click="decryptDigest(communication.bob.publicKey, communication.decrypted.encryptedDigest)"  data-container="body" data-toggle="popover" data-content="This ensures that only Bob can read the message digest, but it doesn't stop anyone modifying the message digest as Bob's public key is available to all" data-trigger="hover" data-placement="top">Bob Public Key</button>
-							<button id="digestPopoverReceiveBPriv" class="btn btn-warning" ng-click="decryptDigest(communication.bob.privateKey, communication.decrypted.encryptedDigest)"  data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top">Bob Private Key</button>
+							<button id="digestPopoverReceiveBPriv" class="btn btn-success" ng-click="decryptDigest(communication.bob.privateKey, communication.decrypted.encryptedDigest)"  data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top">Bob Private Key</button>
 							<button id="digestPopoverReceiveNone" class="btn btn-default" ng-click="decryptDigest(null, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Don't use any encryption for the message digest" data-trigger="hover" data-placement="top">None</button>
 						</div>
 					</div>
@@ -361,8 +361,4 @@
 			</div>
 		</div>
 	</div>
-</div>
-
-<!-- Beautified JSON Data -->
-<pre><div style="height:600px; width: 275px;"><code><graphics-area-data graphics-data="graphicsData"></graphics-area-data></code></div></pre>
 </div>

@@ -13,3 +13,10 @@ railFenceApp.filter('chars', function() {
 		return input.split('');
 	}
 });
+
+var element = document.getElementById("railFenceApp");
+console.log(element);
+angular.element(element).ready(function() {
+	angular.bootstrap(element, ['railFenceApp']);
+});
+console.log("Bootstrapping");

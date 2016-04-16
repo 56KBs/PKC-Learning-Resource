@@ -13,3 +13,7 @@ caesarApp.filter('chars', function() {
 		return input.split('');
 	}
 });
+
+angular.element(document).ready(function() {
+	angular.bootstrap(document.getElementById("caesarApp"), ['caesarApp']);
+});
