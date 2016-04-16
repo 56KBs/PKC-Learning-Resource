@@ -1,43 +1,368 @@
-<div class="controls" ng-click="addNode()"><button >Add Node</button></div>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-attr-width="{{ canvas.width }}" ng-attr-height="{{ canvas.height }}" ng-mousedown="mouseDown($event)" ng-mouseup="mouseUp($event)" ng-mousemove="mouseMove($event)">
-	<defs>
-		<linearGradient id="nodeBlue" gradientTransform="rotate(90)">
-			<stop offset="0%" stop-color="#3399cc" />
-			<stop offset="100%" stop-color="#28abec" />
-		</linearGradient>
-	</defs>
+<div class="container">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		RSA Communications
+	</div>
+	<div class="panel-body">
 
-	<!-- Start Symbols -->
-		<!-- PC Node -->
-		<symbol id="pcNode" viewBox="0 0 200 170"> <!-- Default Size 200x170px -->
-			<path style="fill:#D1D3D4;" d="M-0.1,124.1c0,8.8,7.2,16,16,16h168.3c8.8,0,16-7.2,16-16V15.9c0-8.8-7.2-16-16-16H15.9c-8.8,0-16,7.2-16,16V124.1z"/>
-			<path style="fill:#58595B;" d="M200.1,18.6c0-10.3-6.7-18.7-15-18.7H14.9c-8.3,0-15,8.4-15,18.7v96.6h200.3V18.6z"/>
-			<polygon style="fill:#BCBEC0;" points="83.6,140.1 70.5,166.3 70.5,170 129.5,170 129.5,166.3 116.4,140.1 "/>
-            <rect x="18.5" y="13.3" style="fill:#414042;" width="162.9" height="91.6"/>
-		</symbol>
+		<div class="controls">
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="plaintext">Plaintext</label>
+					<input type="text" class="form-control" id="plaintext" ng-model="animateData.plaintext" placeholder="Hello World" ng-init="animateData.plaintext='Hello World'" required>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input ng-model="animateData.authentication" type="checkbox">Message Digest
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input ng-model="animateData.maninthemiddle" type="checkbox" ng-click="alert('Hi')">Man in the Middle Attack
+					</label>
+				</div>
+				<button type="submit" class="btn btn-default" ng-click="animate(animateData)">Communicate</button>
+			</form>
+		</div>
 
-		<!-- Ethernet Cable -->
-		<symbol id="ethernetConnector" viewBox="0 0 100 28">
-			<polygon style="fill:#434343;" points="0,1.5 0,26.7 1,28 35.8,28 35.8,0 1.4,0 	"/>
-			<polyline style="fill:#FFCB28;" points="1.3,4.2 1.3,6 12.8,6 12.8,4.2 	"/>
-			<polyline style="fill:#FFCB28;" points="1.3,22 1.3,23.7 12.8,23.7 12.8,22 	"/>
-			<polyline style="fill:#FFCB28;" points="1.3,8.7 1.3,10.4 12.8,10.4 12.8,8.7 	"/>
-			<polyline style="fill:#FFCB28;" points="1.3,13.1 1.3,14.9 12.8,14.9 12.8,13.1 	"/>
-			<polyline style="fill:#FFCB28;" points="1.3,17.5 1.3,19.3 12.8,19.3 12.8,17.5 	"/>
-			<rect x="35.8" y="8.2" style="fill:#3474BA;" width="63.9" height="11.5"/>
-		</symbol>
-	<!-- End Symbols -->
+		<div style="padding: 10px;;">
+			<svg style="display: block;margin: 0 auto;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-attr-width="{{ canvas.width }}" ng-attr-height="{{ canvas.height }}" ng-mousedown="mouseDown($event)" ng-mouseup="mouseUp($event)" ng-mousemove="mouseMove($event)">
+				<defs>
+					<linearGradient id="nodeBlue" gradientTransform="rotate(90)">
+						<stop offset="0%" stop-color="#3399cc" ></stop>
+						<stop offset="100%" stop-color="#28abec" ></stop>
+					</linearGradient>
+				</defs>
 
-	<g ng-repeat="node in graphicsData.nodes track by node.id">
-        <pc-node data="node" canvas="$parent.canvas"></pc-node>
-	</g>
+				<!-- Start Symbols -->
+					<!-- PC Node -->
+					<symbol id="pcNode" viewBox="0 0 200 170"> <!-- Default Size 200x170px -->
+						<path style="fill:#D1D3D4;" d="M-0.1,124.1c0,8.8,7.2,16,16,16h168.3c8.8,0,16-7.2,16-16V15.9c0-8.8-7.2-16-16-16H15.9c-8.8,0-16,7.2-16,16V124.1z"></path>
+						<path style="fill:#58595B;" d="M200.1,18.6c0-10.3-6.7-18.7-15-18.7H14.9c-8.3,0-15,8.4-15,18.7v96.6h200.3V18.6z"></path>
+						<polygon style="fill:#BCBEC0;" points="83.6,140.1 70.5,166.3 70.5,170 129.5,170 129.5,166.3 116.4,140.1 "></polygon>
+			            <rect x="18.5" y="13.3" style="fill:#414042;" width="162.9" height="91.6"></rect>
+					</symbol>
 
-	<g ng-repeat="link in graphicsData.links track by link.id">
-		<link-node data="link" source-node="$parent.graphicsData.nodes[link.source.nodeId]" destination-node="$parent.graphicsData.nodes[link.destination.nodeId]" canvas="$parent.canvas"></link-node>
-	</g>
+					<!-- Ethernet Cable -->
+					<symbol id="ethernetConnector" viewBox="0 0 100 28">
+						<polygon style="fill:#434343;" points="0,1.5 0,26.7 1,28 35.8,28 35.8,0 1.4,0 	"></polygon>
+						<polyline style="fill:#FFCB28;" points="1.3,4.2 1.3,6 12.8,6 12.8,4.2 	"></polyline>
+						<polyline style="fill:#FFCB28;" points="1.3,22 1.3,23.7 12.8,23.7 12.8,22 	"></polyline>
+						<polyline style="fill:#FFCB28;" points="1.3,8.7 1.3,10.4 12.8,10.4 12.8,8.7 	"></polyline>
+						<polyline style="fill:#FFCB28;" points="1.3,13.1 1.3,14.9 12.8,14.9 12.8,13.1 	"></polyline>
+						<polyline style="fill:#FFCB28;" points="1.3,17.5 1.3,19.3 12.8,19.3 12.8,17.5 	"></polyline>
+						<rect x="35.8" y="8.2" style="fill:#3474BA;" width="63.9" height="11.5"></rect>
+					</symbol>
+				<!-- End Symbols -->
 
-  Sorry, your browser does not support inline SVG.
-</svg>
+				<g ng-repeat="node in graphicsData.nodes track by node.id">
+			        <pc-node data="node" canvas="$parent.canvas"></pc-node>
+				</g>
+
+				<g ng-repeat="link in graphicsData.links track by link.id">
+					<link-node data="link" source-node="$parent.graphicsData.nodes[link.source.nodeId]" destination-node="$parent.graphicsData.nodes[link.destination.nodeId]" canvas="$parent.canvas"></link-node>
+				</g>
+
+				<g ng-repeat="message in graphicsData.messages track by message.id">
+					<message-node data="message" source-node="$parent.graphicsData.nodes[message.source.nodeId]" destination-node="$parent.graphicsData.nodes[message.destination.nodeId]" canvas="$parent.canvas"></message-node>
+				</g>
+
+			  Sorry, your browser does not support inline SVG.
+			</svg>
+		</div>
+
+		<div class="message-info" ng-show="communicate == true">
+			<!-- Alice Encryption Setup -->
+			<div class="alice-message" ng-show="communication.aliceSent != true">
+				<h3 style="text-align:center">Alice's Message</h3>
+				<div class="well">
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Alice Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.alice.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Alice Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="{{ communication.alice.privateKey.pretty }}">
+						</div>
+					</div>
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Bob Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.bob.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Bob Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="????">
+						</div>
+					</div>
+				</div>
+
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="plaintext" class="col-sm-2 control-label">Plaintext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="plaintext" placeholder="Plaintext" value="{{ communication.plaintext }}" required disabled>
+						</div>
+					</div>
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="messageDigest" class="col-sm-2 control-label">Message Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="messageDigest" placeholder="Message Digest" value="{{ communication.message.digest.plaintext }}" disabled>
+						</div>
+					</div>
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label class="col-sm-2 control-label">Encrypt With</label>
+						<div class="col-sm-10">
+							<button id="digestPopoverSendAPub" class="btn btn-danger" ng-click="encryptDigest(communication.alice.publicKey, communication.message.digest.plaintext)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
+							<button id="digestPopoverSendAPriv" class="btn btn-success" ng-click="encryptDigest(communication.alice.privateKey, communication.message.digest.plaintext)" data-container="body" data-toggle="popover" data-content="Using Alice's private key means when Bob receives the message, he can decrypt this using Alice's public key, authenticating that only Alice could have sent a message with this digest" data-trigger="hover" data-placement="top">Alice Private Key</button>
+							<button id="digestPopoverSendBPub" class="btn btn-warning" ng-click="encryptDigest(communication.bob.publicKey, communication.message.digest.plaintext)"  data-container="body" data-toggle="popover" data-content="This ensures that only Bob can read the message digest, but it doesn't stop anyone modifying the message digest as Bob's public key is available to all" data-trigger="hover" data-placement="top">Bob Public Key</button>
+							<button id="digestPopoverSendBPub" class="btn btn-default" ng-click="encryptDigest(communication.bob.privateKey, communication.message.digest.plaintext)"  data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top" disabled>Bob Private Key</button>
+							<button id="digestPopoverSendNone" class="btn btn-default" ng-click="encryptDigest(null, communication.message.digest.plaintext)" data-container="body" data-toggle="popover" data-content="Don't use any encryption for the message digest" data-trigger="hover" data-placement="top">None</button>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="authenticationDigest" class="col-sm-2 control-label">Authenticated Encrypted Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="authenticationDigest" placeholder="Authentication Digest" value="{{ communication.message.digest.ciphertext }}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="dataToEncrypt" class="col-sm-2 control-label">Data to Encrypt</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="dataToEncrypt" placeholder="Data To Encrypt" value="{{ communication.message.toEncrypt }}" disabled>
+						</div>
+					</div>
+
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Encrypt With</label>
+						<div class="col-sm-10">
+							<button id="encryptionPopoverSendAPub" class="btn btn-danger" ng-click="encryptMessage(communication.alice.publicKey, communication.message.toEncrypt)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
+							<button id="encryptionPopoverSendAPriv" class="btn btn-warning" ng-click="encryptMessage(communication.alice.privateKey, communication.message.toEncrypt)" data-container="body" data-toggle="popover" data-content="Using Alice's private key means anyone can read this communication, it ensures people know that this could have only came from Alice" data-trigger="hover" data-placement="top">Alice Private Key</button>
+							<button id="encryptionPopoverSendBPub" class="btn btn-success" ng-click="encryptMessage(communication.bob.publicKey, communication.message.toEncrypt)" data-container="body" data-toggle="popover" data-content="Using Bob's public key means only Bob can decrypt the message, using his private key" data-trigger="hover" data-placement="top">Bob Public Key</button>
+							<button id="encryptionPopoverSendBPriv" class="btn btn-default" ng-click="encryptMessage(communication.bob.privateKey, communication.message.toEncrypt)" data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top" disabled>Bob Private Key</button>
+							<button id="encryptionPopoverSendNone" class="btn btn-default" ng-click="encryptMessage(null, communication.message.toEncrypt)" data-container="body" data-toggle="popover" data-content="Don't use any encryption for message" data-trigger="hover" data-placement="top">None</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="encryptedForm" class="col-sm-2 control-label">Message to Send</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="encryptedForm" placeholder="Encrypted Form" value="{{ communication.message.ciphertext }}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default" ng-class="{disabled: communication.message.ciphertext == null}" ng-click="sendToBob()">Send to Bob</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Eve Eavesdropping -->
+			<div class="bob-message" ng-show="communication.mitmDecryption == true">
+				<h3 style="text-align:center">Eve's Eavesdropping</h3>
+				<div class="well">
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Alice Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.alice.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Alice Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="????">
+						</div>
+					</div>
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Bob Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.bob.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Bob Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="????">
+						</div>
+					</div>
+				</div>
+
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="ciphertext" class="col-sm-2 control-label">Ciphertext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="ciphertext" placeholder="Ciphertext" value="{{ communication.message.ciphertext }}" required disabled>
+						</div>
+					</div>
+
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Decrypt With</label>
+						<div class="col-sm-10">
+							<button id="decryptionPopoverReceiveAPub" class="btn btn-default" ng-click="decryptMessageEve(communication.alice.publicKey, communication.message.ciphertext)">Alice Public Key</button>
+							<button id="decryptionPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptMessageEve(communication.alice.privateKey, communication.message.ciphertext)" disabled>Alice Private Key</button>
+							<button id="decryptionPopoverReceiveBPub" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.publicKey, communication.message.ciphertext)">Bob Public Key</button>
+							<button id="decryptionPopoverReceiveBPriv" class="btn btn-default" ng-click="decryptMessageEve(communication.bob.privateKey, communication.message.ciphertext)" disabled>Bob Private Key</button>
+							<button id="decryptionPopoverReceiveNone" class="btn btn-default" ng-click="decryptMessageEve(null, communication.message.ciphertext)">None</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="decryptedciphertext" class="col-sm-2 control-label">Decrypted Ciphertext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="decryptedciphertext" placeholder="Decrypted Ciphertext" value="{{ communication.eavesdropping.plaintext }}" required disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="encryptedDigest" class="col-sm-2 control-label">Encrypted Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="encryptedDigest" placeholder="Encrypted Digest" value="{{ communication.eavesdropping.encryptedDigest }}" disabled>
+						</div>
+					</div>
+
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label class="col-sm-2 control-label">Decrypt With</label>
+						<div class="col-sm-10">
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.publicKey, communication.eavesdropping.encryptedDigest)">Alice Public Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.alice.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Alice Private Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.publicKey, communication.eavesdropping.encryptedDigest)">Bob Public Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(communication.bob.privateKey, communication.eavesdropping.encryptedDigest)" disabled>Bob Private Key</button>
+							<button id="" class="btn btn-default" ng-click="decryptDigestEve(null, communication.eavesdropping.encryptedDigest)">None</button>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="decryptedDigest" class="col-sm-2 control-label">Decrypted Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="decryptedDigest" placeholder="Decrypted Digest" value="{{ communication.eavesdropping.decryptedDigest }}" ng-class="{correct-digest: communication.eavesdropping.decryptedDigest == communication.message.digest.plaintext}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="plaintextDigest" class="col-sm-2 control-label">Plaintext Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="plaintextDigest" placeholder="Plaintext Digest" value="{{ communication.message.digest.plaintext }}" ng-class="{correct-digest: communication.eavesdropping.decryptedDigest == communication.message.digest.plaintext}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="plaintext" class="col-sm-2 control-label">Plaintext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="plaintext" placeholder="Plaintext" value="{{ communication.eavesdropping.plaintextMessage }}"disabled>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default" ng-click="continueToBob()">Continue to Bob</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Bob Decryption -->
+			<div class="bob-message" ng-show="communication.bobDecryption == true">
+				<h3 style="text-align:center">Bob's Decryption</h3>
+				<div class="well">
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Alice Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.alice.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Alice Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="????">
+						</div>
+					</div>
+					<div class="form-inline key-group">
+						<div class="form-group">
+							<label for="publicKey">Bob Public Key</label>
+							<input type="text" class="form-control" id="publicKey" placeholder="Public Key" value="{{ communication.bob.publicKey.pretty }}">
+						</div>
+						<div class="form-group">
+							<label for="privateKey">Bob Private Key</label>
+							<input type="text" class="form-control" id="privateKey" placeholder="Private Key" value="{{ communication.bob.privateKey.pretty }}">
+						</div>
+					</div>
+				</div>
+
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="ciphertext" class="col-sm-2 control-label">Ciphertext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="ciphertext" placeholder="Ciphertext" value="{{ communication.message.ciphertext }}" required disabled>
+						</div>
+					</div>
+
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Decrypt With</label>
+						<div class="col-sm-10">
+							<button id="decryptionPopoverReceiveAPub" class="btn btn-warning" ng-click="decryptMessage(communication.alice.publicKey, communication.message.ciphertext)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
+							<button id="decryptionPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptMessage(communication.alice.privateKey, communication.message.ciphertext)" data-container="body" data-toggle="popover" data-content="Using Alice's private key means when Bob receives the message, he can decrypt this using Alice's public key, authenticating that only Alice could have sent a message with this digest" data-trigger="hover" data-placement="top" disabled>Alice Private Key</button>
+							<button id="decryptionPopoverReceiveBPub" class="btn btn-danger" ng-click="decryptMessage(communication.bob.publicKey, communication.message.ciphertext)"  data-container="body" data-toggle="popover" data-content="This ensures that only Bob can read the message digest, but it doesn't stop anyone modifying the message digest as Bob's public key is available to all" data-trigger="hover" data-placement="top">Bob Public Key</button>
+							<button id="decryptionPopoverReceiveBPriv" class="btn btn-success" ng-click="decryptMessage(communication.bob.privateKey, communication.message.ciphertext)"  data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top">Bob Private Key</button>
+							<button id="decryptionPopoverReceiveNone" class="btn btn-default" ng-click="decryptMessage(null, communication.message.ciphertext)" data-container="body" data-toggle="popover" data-content="Don't use any encryption for the message digest" data-trigger="hover" data-placement="top">None</button>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="decryptedciphertext" class="col-sm-2 control-label">Decrypted Ciphertext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="decryptedciphertext" placeholder="Decrypted Ciphertext" value="{{ communication.decrypted.plaintext }}" required disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="encryptedDigest" class="col-sm-2 control-label">Encrypted Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="encryptedDigest" placeholder="Encrypted Digest" value="{{ communication.decrypted.encryptedDigest }}" disabled>
+						</div>
+					</div>
+
+					<!-- Let users choose which encryption key to use, highlight which they should use -->
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label class="col-sm-2 control-label">Decrypt With</label>
+						<div class="col-sm-10">
+							<button id="digestPopoverReceiveAPub" class="btn btn-warning" ng-click="decryptDigest(communication.alice.publicKey, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Using Alice's public key means no one will be able to decrypt this but Alice with her private key" data-trigger="hover" data-placement="top">Alice Public Key</button>
+							<button id="digestPopoverReceiveAPriv" class="btn btn-default" ng-click="decryptDigest(communication.alice.privateKey, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Using Alice's private key means when Bob receives the message, he can decrypt this using Alice's public key, authenticating that only Alice could have sent a message with this digest" data-trigger="hover" data-placement="top" disabled>Alice Private Key</button>
+							<button id="digestPopoverReceiveBPub" class="btn btn-danger" ng-click="decryptDigest(communication.bob.publicKey, communication.decrypted.encryptedDigest)"  data-container="body" data-toggle="popover" data-content="This ensures that only Bob can read the message digest, but it doesn't stop anyone modifying the message digest as Bob's public key is available to all" data-trigger="hover" data-placement="top">Bob Public Key</button>
+							<button id="digestPopoverReceiveBPriv" class="btn btn-success" ng-click="decryptDigest(communication.bob.privateKey, communication.decrypted.encryptedDigest)"  data-container="body" data-toggle="popover" data-content="Alice doesn't have access to Bob's private key" data-trigger="hover" data-placement="top">Bob Private Key</button>
+							<button id="digestPopoverReceiveNone" class="btn btn-default" ng-click="decryptDigest(null, communication.decrypted.encryptedDigest)" data-container="body" data-toggle="popover" data-content="Don't use any encryption for the message digest" data-trigger="hover" data-placement="top">None</button>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="decryptedDigest" class="col-sm-2 control-label">Decrypted Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="decryptedDigest" placeholder="Decrypted Digest" value="{{ communication.decrypted.decryptedDigest }}" ng-class="{correct-digest: communication.decrypted.decryptedDigest == communication.message.digest.plaintext}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="plaintextDigest" class="col-sm-2 control-label">Plaintext Digest</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="plaintextDigest" placeholder="Plaintext Digest" value="{{ communication.message.digest.plaintext }}" ng-class="{correct-digest: communication.decrypted.decryptedDigest == communication.message.digest.plaintext}" disabled>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="animateData.authentication == true">
+						<label for="plaintext" class="col-sm-2 control-label">Plaintext</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="plaintext" placeholder="Plaintext" value="{{ communication.decrypted.plaintextMessage }}"disabled>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Beautified JSON Data -->
-<pre style="float: left"><div style="height:600px; width: 275px;"><code><graphics-area-data graphics-data="graphicsData"></graphics-area-data></code></div></pre>
+<pre><div style="height:600px; width: 275px;"><code><graphics-area-data graphics-data="graphicsData"></graphics-area-data></code></div></pre>
+</div>

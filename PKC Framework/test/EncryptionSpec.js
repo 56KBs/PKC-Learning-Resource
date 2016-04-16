@@ -114,34 +114,118 @@ describe("EncryptionFactory", function() {
 	});
 
 	describe("EncryptData", function() {
-		it("returns encrypted data", function() {
+		it("correctly encrypts short data", function() {
 			var RSAKeys = {
 				'privateKey': {
-					'exponent': "20599243",
-					'modulus': "119117501"},
+					'exponent': "356766209",
+					'modulus': "2918405449"},
 				'publicKey': {
-					'exponent':"64876771",
-					'modulus': "119117501"}
+					'exponent':"65537",
+					'modulus': "2918405449"}
 			};
 
-			var Encrypted = EncryptionFactory.EncryptData("123456", RSAKeys.publicKey);
-			expect(Encrypted).toEqual("36495657");
+			var Encrypted = EncryptionFactory.EncryptData("hi", RSAKeys.publicKey);
+			expect(Encrypted).toEqual("762869554");
+		})
+
+		it("correctly encrypts longer data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.EncryptData("hi there", RSAKeys.publicKey);
+			expect(Encrypted).toEqual("1887936603;2068322044;1752984510");
+		})
+
+		it("correctly encrypts single character data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.EncryptData("1699005785;1879828454;1970802912", RSAKeys.publicKey);
+			expect(Encrypted).toEqual("1640570292;304447387;2392550670;5643320;1995866852;1169894474;263465018;513143965;753734441;2621155562;2389088970");
+		})
+
+		it("correctly encrypts encrypted digest data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.EncryptData("h", RSAKeys.publicKey);
+			expect(Encrypted).toEqual("2436449047");
 		})
 	});
 
 	describe("DecryptData", function() {
-		it("returns decrypted data", function() {
+		it("correctly decrypts short data", function() {
 			var RSAKeys = {
 				'privateKey': {
-					'exponent': "20599243",
-					'modulus': "119117501"},
+					'exponent': "356766209",
+					'modulus': "2918405449"},
 				'publicKey': {
-					'exponent':"64876771",
-					'modulus': "119117501"}
+					'exponent':"65537",
+					'modulus': "2918405449"}
 			};
 
-			var Decrypted = EncryptionFactory.DecryptData("36495657", RSAKeys.privateKey);
-			expect(Decrypted).toEqual("123456");
+			var Decrypted = EncryptionFactory.DecryptData("762869554", RSAKeys.privateKey);
+			expect(Decrypted).toEqual("hi");
+		})
+
+		it("correctly decrypts longer data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.DecryptData("1887936603;2068322044;1752984510", RSAKeys.privateKey);
+			expect(Encrypted).toEqual("hi there");
+		})
+
+		it("correctly decrypts single character data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.DecryptData("2436449047", RSAKeys.privateKey);
+			expect(Encrypted).toEqual("h");
+		})
+
+		it("correctly decrypts encrypted digest data", function() {
+			var RSAKeys = {
+				'privateKey': {
+					'exponent': "356766209",
+					'modulus': "2918405449"},
+				'publicKey': {
+					'exponent':"65537",
+					'modulus': "2918405449"}
+			};
+
+			var Encrypted = EncryptionFactory.DecryptData("1640570292;304447387;2392550670;5643320;1995866852;1169894474;263465018;513143965;753734441;2621155562;2389088970", RSAKeys.privateKey);
+			expect(Encrypted).toEqual("1699005785;1879828454;1970802912");
 		})
 	});
 });

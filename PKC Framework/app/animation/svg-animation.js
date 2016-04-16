@@ -1,1 +1,1 @@
-angular.module('websiteApp.SVGAnimation', ['websiteApp.SVGAnimation.Nodes', 'websiteApp.SVGAnimation.Links']);
+angular.module('websiteApp.SVGAnimation', ['websiteApp.SVGAnimation.Nodes', 'websiteApp.SVGAnimation.Links', 'websiteApp.SVGAnimation.Messages']);

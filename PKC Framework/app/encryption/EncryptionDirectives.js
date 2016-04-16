@@ -15,6 +15,11 @@ angular.module('websiteApp.EncryptionDirectives')
 {
 	$scope.keyLength = 32;
 	$scope.keys = null;
+	$scope.prettyKeys = {
+		'publicKey': null,
+		'privateKey': null
+	};
+
 	$scope.generateKeys = function(bitLength)
 	{
 		if (bitLength === undefined)
@@ -23,18 +28,32 @@ angular.module('websiteApp.EncryptionDirectives')
 		}
 
 		$scope.keys = EncryptionFactory.GenerateKeys(true, bitLength);
+		$scope.prettyKeys.publicKey = $scope.keys.publicKey.modulus + ";" + $scope.keys.publicKey.exponent;
+		$scope.prettyKeys.privateKey = $scope.keys.privateKey.modulus + ";" + $scope.keys.privateKey.exponent;
 	}
 
-	$scope.encrypt = function()
+	$scope.encrypt = function(key, message)
 	{
 		console.log("Encrypting");
-		$scope.encryption.message.encrypted = EncryptionFactory.EncryptData($scope.encryption.message.plaintext, $scope.encryption.key);
+
+		var correctKey = {
+			'modulus': key.substring(0, key.indexOf(";")),
+			'exponent': key.substring(key.indexOf(";") + 1, key.keyLength)
+		};
+
+		$scope.encryptedMessage = EncryptionFactory.EncryptData(message, correctKey);
 	}
 
 
-	$scope.decrypt = function()
+	$scope.decrypt = function(key, message)
 	{
 		console.log("Decrypting");
-		$scope.decryption.message.plaintext = EncryptionFactory.DecryptData($scope.decryption.message.encrypted, $scope.decryption.key);
+		
+		var correctKey = {
+			'modulus': key.substring(0, key.indexOf(";")),
+			'exponent': key.substring(key.indexOf(";") + 1, key.keyLength)
+		};
+
+		$scope.decryptedMessage = EncryptionFactory.DecryptData(message, correctKey);
 	}
 }])

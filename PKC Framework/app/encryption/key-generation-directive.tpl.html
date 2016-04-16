@@ -1,58 +1,110 @@
-<div class="input-group">
-    <div class="input-group">
-        <span class="input-group-addon">Bit Length</span>
-        <select class="form-control">
-            <option value="32">32-Bit</option>
-            <option value="64">64-Bit</option>
-            <option value="128">128-Bit</option>
-            <option value="256">256-Bit</option>
-            <option value="512">512-Bit</option>
-            <option value="1024">1024-Bit</option>
-        </select>
-        <div class="input-group-btn">
-            <button type="submit" class="btn btn-default">Generate</button>
-        </div>
-    </div>
+<div class="container">
+	<div class="panel panel-default key-generator-directive-container">
+		<div class="panel-heading">RSA Key Generation</div>
+		<div class="panel-body">
+			<div class="key-generator-container">
+				<div class="alert alert-danger alert-dismissible" role="alert" ng-show="keyLength >= 1024"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Warning!</strong> Generating keys of this length may take a long time. Don't say you weren't warned.</div>
+
+				<form class="form form-horizontal key-form">
+				    <div class="form-group">
+				        <label for="keyLength" class="col-sm-2 control-label">Bit Length</label>
+				        <div class="col-sm-10">
+							<select class="form-control select-form-control" id="keyLength" ng-model="keyLength">
+								<option value="32" ng-selected="true">32-Bit</option>
+								<option value="64">64-Bit</option>
+								<option value="128">128-Bit</option>
+								<option value="256">256-Bit</option>
+								<option value="512">512-Bit</option>
+								<option value="1024">1024-Bit</option>
+							</select>
+						</div>
+				    </div>
+				    <div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" class="btn btn-default" ng-click="generateKeys(keyLength)">Generate</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<br>
+
+			<form class="encrypt-form form-horizontal">
+				<div class="form-group">
+					<label for="publicEncryptionKey" class="col-sm-2 control-label">Public Key</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="publicEncryptionKey" value="{{ prettyKeys.publicKey }}">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="privateEncryptionKey" class="col-sm-2 control-label">Private Key</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="privateEncryptionKey" value="{{ prettyKeys.privateKey }}">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">RSA Decryption</div>
+		<div class="panel-body encryption-form">
+			<form class="encrypt-form form-horizontal">
+				<div class="form-group">
+					<label for="encryptionKey" class="col-sm-2 control-label">Encryption Key</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="encryptionKey" ng-model="encryption.key" placeholder="Encryption Key" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="encryptionMessage" class="col-sm-2 control-label">Plaintext</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="encryptionMessage" ng-model="encryption.message" placeholder="Hello World" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default" ng-click="encrypt(encryption.key, encryption.message)">Encrypt</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="encryptedMessage" class="col-sm-2 control-label">Encrypted Message</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="encryptedMessage" value="{{ encryptedMessage }}">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">RSA Decryption</div>
+		<div class="panel-body decryption-form">
+			<form class="encrypt-form form-horizontal">
+				<div class="form-group">
+					<label for="decryptionKey" class="col-sm-2 control-label">Decryption Key</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="decryptionKey" ng-model="decryption.key" placeholder="Encryption Key" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="decryptionMessage" class="col-sm-2 control-label">Ciphertext</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="decryptionMessage" ng-model="decryption.message" placeholder="Hello World" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default" ng-click="decrypt(decryption.key, decryption.message)">Decrypt</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="decryptedMessage" class="col-sm-2 control-label">Decrypted Message</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="decryptedMessage" value="{{ decryptedMessage }}">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
-
-<select name="keyLength" ng-model="keyLength">
-	<option value="32" ng-selected="true">32-Bit</option>
-	<option value="64">64-Bit</option>
-	<option value="128">128-Bit</option>
-	<option value="512">512-Bit</option>
-	<option value="1028">1028-Bit</option>
-</select>
-
-<button ng-click="generateKeys(keyLength)">Generate Keys</button>
-<br>
-<span ng-show="keyLength == 1028">This may take a while!</span>
-
-<h3>Key Length: {{ keys.bitLength }}</h3>
-<h3>Public Key:</h3>
-<h4>Modulus: {{ keys.publicKey.modulus }}</h4>
-<h4>Exponent: {{ keys.publicKey.exponent }}</h4>
-<h3>Private Key:</h3>
-<h4>Modulus: {{ keys.privateKey.modulus }}</h4>
-<h4>Exponent: {{ keys.privateKey.exponent }}</h4>
-<br>
-<br>
-
-<h2>Encrypt</h2>
-<form class="encrypt-form">
-	Key Modulus: <input type="text" ng-model="encryption.key.modulus" /><br>
-	Key Exponent: <input type="text" ng-model="encryption.key.exponent" /><br>
-	Message: <input type="text" ng-model="encryption.message.plaintext" /><br>
-	<input type="submit" ng-click="encrypt()" value="Encrypt" />
-	<br>
-	Encrypted: <input type="text" ng-model="encryption.message.encrypted" />
-</form>
-
-<h2>Decrypt</h2>
-<form class="encrypt-form">
-	Key Modulus: <input type="text" ng-model="decryption.key.modulus" /><br>
-	Key Exponent: <input type="text" ng-model="decryption.key.exponent" /><br>
-	Message: <input type="text" ng-model="decryption.message.encrypted" /><br>
-	<input type="submit" ng-click="decrypt()" value="Decrypt" />
-	<br>
-	Encrypted: <input type="text" ng-model="decryption.message.plaintext" />
-</form>
