@@ -59,10 +59,26 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 
 	EncryptionFactory.EncryptData = function(dataToEncrypt, encryptionKey)
 	{
-	    var paddedData = EncryptionFactory.StringAsPaddedAscii(dataToEncrypt);
+		// If splitting is required, do it
+		if (dataToEncrypt.length * 3 > encryptionKey.modulus.length)
+		{
+			var splitAt = parseInt(encryptionKey.modulus.length / 3);
 
-	    // Encrypts Data
-		return bigInt(parseInt(paddedData)).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+			var first = dataToEncrypt.substring(0, splitAt);
+			var second = dataToEncrypt.substring(splitAt, dataToEncrypt.length);
+
+			console.log("First: [" + first + "]");
+			console.log("Second: [" + second + "]");
+
+			return EncryptionFactory.EncryptData(first, encryptionKey) + ";" + EncryptionFactory.EncryptData(second, encryptionKey);
+		}
+		else
+		{
+		    var paddedData = EncryptionFactory.StringAsPaddedAscii(dataToEncrypt);
+
+		    // Encrypts Data
+			return bigInt(parseInt(paddedData)).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+		}
 	}
 
 	EncryptionFactory.StringAsPaddedAscii = function(dataToPad) {
@@ -87,19 +103,37 @@ angular.module('websiteApp.EncryptionFactory').factory('EncryptionFactory', func
 
 	EncryptionFactory.DecryptData = function(dataToDecrypt, encryptionKey)
 	{
-		// Decrypts Data
-	    var decryptedData = bigInt(dataToDecrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+		if (dataToDecrypt.indexOf(";") > -1)
+		{
+			var splitAt = dataToDecrypt.indexOf(";");
 
-	    console.log(decryptedData);
+			var first = dataToDecrypt.substring(0, splitAt);
+			var second = dataToDecrypt.substring(splitAt + 1, dataToDecrypt.length);
 
-	    return EncryptionFactory.PaddedAsciiAsString(decryptedData);
+			console.log("Decrypt First: [" + first + "]");
+			console.log("Decrypt Second: [" + second + "]");
+
+			console.log("Decrypted First: " + EncryptionFactory.DecryptData(first, encryptionKey));
+
+			return EncryptionFactory.DecryptData(first, encryptionKey) + EncryptionFactory.DecryptData(second, encryptionKey);
+		}
+		else
+		{
+			// Decrypts Data
+		    var decryptedData = bigInt(dataToDecrypt).modPow(encryptionKey['exponent'], encryptionKey['modulus']).toString();
+
+		    console.log(decryptedData);
+		    console.log(EncryptionFactory.PaddedAsciiAsString(decryptedData));
+
+		    return EncryptionFactory.PaddedAsciiAsString(decryptedData);
+		}
 	}
 
 	EncryptionFactory.PaddedAsciiAsString = function(dataToConvert)
 	{
 	    var dataString = "";
 
-	    if (dataToConvert.length % 3 != 0)
+    	if (dataToConvert.length % 3 != 0)
 	    {
 	        dataString += String.fromCharCode(parseInt(dataToConvert.substring(0, 2)));
 	        dataToConvert = dataToConvert.substring(2);
