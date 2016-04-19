@@ -22,6 +22,20 @@ describe("Caesar Cipher Directive Controller", function() {
 				expect($scope.message.shift).toEqual(2);
 			});
 
+			it('triggering shiftLeft modifies the shift value with no plaintext', function() {
+				$scope.message.plaintext = undefined;
+				$scope.shiftLeft();
+
+				expect($scope.message.shift).toEqual(2);
+			});
+
+			it('triggering shiftRight modifies the shift value with no plaintext', function() {
+				$scope.message.plaintext = undefined;
+				$scope.shiftRight();
+
+				expect($scope.message.shift).toEqual(4);
+			});
+
 			it('triggering shiftLeft updates the ciphertext', function() {
 				$scope.message.plaintext = "Hello";
 				$scope.shiftLeft();

@@ -1,5 +1,6 @@
 angular.module('websiteApp.CaesarCipher.Directives', ['websiteApp.CaesarCipher.EncryptionService']);
 
+/* istanbul ignore next */
 angular.module('websiteApp.CaesarCipher.Directives').directive('caesarCipher', function() {
 	
 	// Find the script directory, fix to allow concrete5 blocks

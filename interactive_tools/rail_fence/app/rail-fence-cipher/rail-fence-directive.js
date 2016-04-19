@@ -1,5 +1,6 @@
 angular.module('websiteApp.RailFenceCipher.Directives', ['websiteApp.RailFenceCipher.EncryptionService']);
 
+/* istanbul ignore next */
 angular.module('websiteApp.RailFenceCipher.Directives').directive('railFenceCipher', function() {
 	
 	// Find the script directory, fix to allow concrete5 blocks
